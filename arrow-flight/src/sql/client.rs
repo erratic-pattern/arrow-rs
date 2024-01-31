@@ -53,6 +53,8 @@ use prost::Message;
 use tonic::transport::Channel;
 use tonic::{IntoRequest, Streaming};
 
+use super::DoPutPreparedStatemenResult;
+
 /// A FlightSQLServiceClient is an endpoint for retrieving or storing Arrow data
 /// by FlightSQL protocol.
 #[derive(Debug, Clone)]
@@ -500,6 +502,7 @@ impl PreparedStatement<Channel> {
     }
 
     /// Submit parameters to the server, if any have been set on this prepared statement instance
+    /// Updates our stored prepared statement handle with the handle given by the server response.
     async fn write_bind_params(&mut self) -> Result<(), ArrowError> {
         if let Some(ref params_batch) = self.parameter_binding {
             let cmd = CommandPreparedStatementQuery {
@@ -518,14 +521,18 @@ impl PreparedStatement<Channel> {
                 .await
                 .map_err(flight_error_to_arrow_error)?;
 
-            self.flight_sql_client
+            let result = self
+                .flight_sql_client
                 .do_put(stream::iter(flight_data))
                 .await?
-                .try_collect::<Vec<_>>()
+                .message()
                 .await
-                .map_err(status_to_arrow_error)?;
+                .map_err(status_to_arrow_error)?
+                .unwrap();
+            let any = Any::decode(&*result.app_metadata).map_err(decode_error_to_arrow_error)?;
+            let result: DoPutPreparedStatemenResult = any.unpack()?.unwrap();
+            self.handle = result.prepared_statement_handle;
         }
-
         Ok(())
     }
 
