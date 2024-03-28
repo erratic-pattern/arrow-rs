@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parquet/src/compression.rs`."><title>compression.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="parquet" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parquet/src/compression.rs`."><title>compression.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="parquet" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../parquet/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -892,6 +892,7 @@
 <a href="#890" id="890">890</a>
 <a href="#891" id="891">891</a>
 <a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -1038,25 +1039,41 @@ assert_eq!(output, data);
 <span class="doccomment">/// Given the compression type `codec`, returns a codec used to compress and decompress
 /// bytes for the compression type.
 /// This returns `None` if the codec type is `UNCOMPRESSED`.
-</span><span class="kw">pub fn </span>create_codec(
-    codec: CodecType,
-    _options: <span class="kw-2">&amp;</span>CodecOptions,
-) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>Codec&gt;&gt;&gt; {
-    <span class="kw">match </span>codec {
-        <span class="attr">#[cfg(any(feature = <span class="string">"brotli"</span>, test))]
-        </span>CodecType::BROTLI(level) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(BrotliCodec::new(level)))),
-        <span class="attr">#[cfg(any(feature = <span class="string">"flate2"</span>, test))]
-        </span>CodecType::GZIP(level) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(GZipCodec::new(level)))),
-        <span class="attr">#[cfg(any(feature = <span class="string">"snap"</span>, test))]
-        </span>CodecType::SNAPPY =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(SnappyCodec::new()))),
-        <span class="attr">#[cfg(any(feature = <span class="string">"lz4"</span>, test))]
-        </span>CodecType::LZ4 =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(LZ4HadoopCodec::new(
-            _options.backward_compatible_lz4,
-        )))),
-        <span class="attr">#[cfg(any(feature = <span class="string">"zstd"</span>, test))]
-        </span>CodecType::ZSTD(level) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(ZSTDCodec::new(level)))),
-        <span class="attr">#[cfg(any(feature = <span class="string">"lz4"</span>, test))]
-        </span>CodecType::LZ4_RAW =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(LZ4RawCodec::new()))),
+</span><span class="kw">pub fn </span>create_codec(codec: CodecType, _options: <span class="kw-2">&amp;</span>CodecOptions) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>Codec&gt;&gt;&gt; {
+    <span class="attr">#[allow(unreachable_code, unused_variables)]
+    </span><span class="kw">match </span>codec {
+        CodecType::BROTLI(level) =&gt; {
+            <span class="attr">#[cfg(any(feature = <span class="string">"brotli"</span>, test))]
+            </span><span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(BrotliCodec::new(level))));
+            <span class="prelude-val">Err</span>(ParquetError::General(<span class="string">"Disabled feature at compile time: brotli"</span>.into()))
+        },
+        CodecType::GZIP(level) =&gt; {
+            <span class="attr">#[cfg(any(feature = <span class="string">"flate2"</span>, test))]
+            </span><span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(GZipCodec::new(level))));
+            <span class="prelude-val">Err</span>(ParquetError::General(<span class="string">"Disabled feature at compile time: flate2"</span>.into()))
+        },
+        CodecType::SNAPPY =&gt; {
+            <span class="attr">#[cfg(any(feature = <span class="string">"snap"</span>, test))]
+            </span><span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(SnappyCodec::new())));
+            <span class="prelude-val">Err</span>(ParquetError::General(<span class="string">"Disabled feature at compile time: snap"</span>.into()))
+        },
+        CodecType::LZ4 =&gt; {
+            <span class="attr">#[cfg(any(feature = <span class="string">"lz4"</span>, test))]
+            </span><span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(LZ4HadoopCodec::new(
+                _options.backward_compatible_lz4,
+            ))));
+            <span class="prelude-val">Err</span>(ParquetError::General(<span class="string">"Disabled feature at compile time: lz4"</span>.into()))
+        },
+        CodecType::ZSTD(level) =&gt; {
+            <span class="attr">#[cfg(any(feature = <span class="string">"zstd"</span>, test))]
+            </span><span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(ZSTDCodec::new(level))));
+            <span class="prelude-val">Err</span>(ParquetError::General(<span class="string">"Disabled feature at compile time: zstd"</span>.into()))
+        },
+        CodecType::LZ4_RAW =&gt; {
+            <span class="attr">#[cfg(any(feature = <span class="string">"lz4"</span>, test))]
+            </span><span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Box::new(LZ4RawCodec::new())));
+            <span class="prelude-val">Err</span>(ParquetError::General(<span class="string">"Disabled feature at compile time: lz4"</span>.into()))
+        },
         CodecType::UNCOMPRESSED =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
         <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">nyi_err!</span>(<span class="string">"The codec type {} is not supported yet"</span>, codec)),
     }
@@ -1154,8 +1171,7 @@ assert_eq!(output, data);
         }
 
         <span class="kw">fn </span>compress(<span class="kw-2">&amp;mut </span><span class="self">self</span>, input_buf: <span class="kw-2">&amp;</span>[u8], output_buf: <span class="kw-2">&amp;mut </span>Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-            <span class="kw">let </span><span class="kw-2">mut </span>encoder =
-                write::GzEncoder::new(output_buf, Compression::new(<span class="self">self</span>.level.<span class="number">0</span>));
+            <span class="kw">let </span><span class="kw-2">mut </span>encoder = write::GzEncoder::new(output_buf, Compression::new(<span class="self">self</span>.level.<span class="number">0</span>));
             encoder.write_all(input_buf)<span class="question-mark">?</span>;
             encoder.try_finish().map_err(|e| e.into())
         }
@@ -1335,7 +1351,8 @@ assert_eq!(output, data);
         }
     }
 }
-<span class="attr">#[cfg(any(feature = <span class="string">"lz4"</span>, test))]
+
+<span class="attr">#[cfg(all(feature = <span class="string">"experimental"</span>, any(feature = <span class="string">"lz4"</span>, test)))]
 </span><span class="kw">pub use </span>lz4_codec::<span class="kw-2">*</span>;
 
 <span class="attr">#[cfg(any(feature = <span class="string">"zstd"</span>, test))]
@@ -1513,10 +1530,7 @@ assert_eq!(output, data);
     /// Adapted from pola-rs [compression.rs:try_decompress_hadoop](https://pola-rs.github.io/polars/src/parquet2/compression.rs.html#225)
     /// Translated from the apache arrow c++ function [TryDecompressHadoop](https://github.com/apache/arrow/blob/bf18e6e4b5bb6180706b1ba0d597a65a4ce5ca48/cpp/src/arrow/util/compression_lz4.cc#L474).
     /// Returns error if decompression failed.
-    </span><span class="kw">fn </span>try_decompress_hadoop(
-        input_buf: <span class="kw-2">&amp;</span>[u8],
-        output_buf: <span class="kw-2">&amp;mut </span>[u8],
-    ) -&gt; io::Result&lt;usize&gt; {
+    </span><span class="kw">fn </span>try_decompress_hadoop(input_buf: <span class="kw-2">&amp;</span>[u8], output_buf: <span class="kw-2">&amp;mut </span>[u8]) -&gt; io::Result&lt;usize&gt; {
         <span class="comment">// Parquet files written with the Hadoop Lz4Codec use their own framing.
         // The input buffer can contain an arbitrary number of "frames", each
         // with the following structure:
@@ -1554,11 +1568,9 @@ assert_eq!(output, data);
                     <span class="string">"Not enough bytes to hold advertised output"</span>,
                 ));
             }
-            <span class="kw">let </span>decompressed_size = lz4_flex::decompress_into(
-                <span class="kw-2">&amp;</span>input[..expected_compressed_size <span class="kw">as </span>usize],
-                output,
-            )
-            .map_err(|e| ParquetError::External(Box::new(e)))<span class="question-mark">?</span>;
+            <span class="kw">let </span>decompressed_size =
+                lz4_flex::decompress_into(<span class="kw-2">&amp;</span>input[..expected_compressed_size <span class="kw">as </span>usize], output)
+                    .map_err(|e| ParquetError::External(Box::new(e)))<span class="question-mark">?</span>;
             <span class="kw">if </span>decompressed_size != expected_decompressed_size <span class="kw">as </span>usize {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(io::Error::new(
                     io::ErrorKind::Other,
@@ -1606,8 +1618,7 @@ assert_eq!(output, data);
                 <span class="prelude-val">Ok</span>(n) =&gt; {
                     <span class="kw">if </span>n != required_len {
                         <span class="kw">return </span><span class="prelude-val">Err</span>(ParquetError::General(
-                            <span class="string">"LZ4HadoopCodec uncompress_size is not the expected one"
-                                </span>.into(),
+                            <span class="string">"LZ4HadoopCodec uncompress_size is not the expected one"</span>.into(),
                         ));
                     }
                     <span class="prelude-val">Ok</span>(n)
@@ -1618,20 +1629,12 @@ assert_eq!(output, data);
                 </span><span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
                     <span class="comment">// Truncate any inserted element before tryingg next algorithm.
                     </span>output_buf.truncate(output_len);
-                    <span class="kw">match </span>LZ4Codec::new().decompress(
-                        input_buf,
-                        output_buf,
-                        uncompress_size,
-                    ) {
+                    <span class="kw">match </span>LZ4Codec::new().decompress(input_buf, output_buf, uncompress_size) {
                         <span class="prelude-val">Ok</span>(n) =&gt; <span class="prelude-val">Ok</span>(n),
                         <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
                             <span class="comment">// Truncate any inserted element before tryingg next algorithm.
                             </span>output_buf.truncate(output_len);
-                            LZ4RawCodec::new().decompress(
-                                input_buf,
-                                output_buf,
-                                uncompress_size,
-                            )
+                            LZ4RawCodec::new().decompress(input_buf, output_buf, uncompress_size)
                         }
                     }
                 }
@@ -1653,8 +1656,7 @@ assert_eq!(output, data);
             <span class="kw">let </span>compressed_size = compressed_size <span class="kw">as </span>u32;
             <span class="kw">let </span>uncompressed_size = input_buf.len() <span class="kw">as </span>u32;
             output_buf[..SIZE_U32].copy_from_slice(<span class="kw-2">&amp;</span>uncompressed_size.to_be_bytes());
-            output_buf[SIZE_U32..PREFIX_LEN]
-                .copy_from_slice(<span class="kw-2">&amp;</span>compressed_size.to_be_bytes());
+            output_buf[SIZE_U32..PREFIX_LEN].copy_from_slice(<span class="kw-2">&amp;</span>compressed_size.to_be_bytes());
 
             <span class="prelude-val">Ok</span>(())
         }

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-data/src/transform/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_data" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-data/src/transform/mod.rs`."><title>mod.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_data" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../arrow_data/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -694,6 +694,78 @@
 <a href="#692" id="692">692</a>
 <a href="#693" id="693">693</a>
 <a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
+<a href="#733" id="733">733</a>
+<a href="#734" id="734">734</a>
+<a href="#735" id="735">735</a>
+<a href="#736" id="736">736</a>
+<a href="#737" id="737">737</a>
+<a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
+<a href="#745" id="745">745</a>
+<a href="#746" id="746">746</a>
+<a href="#747" id="747">747</a>
+<a href="#748" id="748">748</a>
+<a href="#749" id="749">749</a>
+<a href="#750" id="750">750</a>
+<a href="#751" id="751">751</a>
+<a href="#752" id="752">752</a>
+<a href="#753" id="753">753</a>
+<a href="#754" id="754">754</a>
+<a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -711,13 +783,10 @@
 // specific language governing permissions and limitations
 // under the License.
 
-</span><span class="kw">use super</span>::{
-    data::{into_buffers, new_buffers},
-    ArrayData, ArrayDataBuilder,
-};
+</span><span class="kw">use super</span>::{data::new_buffers, ArrayData, ArrayDataBuilder, ByteView};
 <span class="kw">use </span><span class="kw">crate</span>::bit_mask::set_bits;
 <span class="kw">use </span>arrow_buffer::buffer::{BooleanBuffer, NullBuffer};
-<span class="kw">use </span>arrow_buffer::{bit_util, i256, ArrowNativeType, MutableBuffer};
+<span class="kw">use </span>arrow_buffer::{bit_util, i256, ArrowNativeType, Buffer, MutableBuffer};
 <span class="kw">use </span>arrow_schema::{ArrowError, DataType, IntervalUnit, UnionMode};
 <span class="kw">use </span>half::f16;
 <span class="kw">use </span>num::Integer;
@@ -764,36 +833,6 @@
             .as_mut()
             .expect(<span class="string">"MutableArrayData not nullable"</span>)
     }
-
-    <span class="kw">fn </span>freeze(<span class="self">self</span>, dictionary: <span class="prelude-ty">Option</span>&lt;ArrayData&gt;) -&gt; ArrayDataBuilder {
-        <span class="kw">let </span>buffers = into_buffers(<span class="kw-2">&amp;</span><span class="self">self</span>.data_type, <span class="self">self</span>.buffer1, <span class="self">self</span>.buffer2);
-
-        <span class="kw">let </span>child_data = <span class="kw">match </span><span class="self">self</span>.data_type {
-            DataType::Dictionary(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">vec!</span>[dictionary.unwrap()],
-            <span class="kw">_ </span>=&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>child_data = Vec::with_capacity(<span class="self">self</span>.child_data.len());
-                <span class="kw">for </span>child <span class="kw">in </span><span class="self">self</span>.child_data {
-                    child_data.push(child.freeze());
-                }
-                child_data
-            }
-        };
-
-        <span class="kw">let </span>nulls = <span class="self">self
-            </span>.null_buffer
-            .map(|nulls| {
-                <span class="kw">let </span>bools = BooleanBuffer::new(nulls.into(), <span class="number">0</span>, <span class="self">self</span>.len);
-                <span class="kw">unsafe </span>{ NullBuffer::new_unchecked(bools, <span class="self">self</span>.null_count) }
-            })
-            .filter(|n| n.null_count() &gt; <span class="number">0</span>);
-
-        ArrayDataBuilder::new(<span class="self">self</span>.data_type)
-            .offset(<span class="number">0</span>)
-            .len(<span class="self">self</span>.len)
-            .nulls(nulls)
-            .buffers(buffers)
-            .child_data(child_data)
-    }
 }
 
 <span class="kw">fn </span>build_extend_null_bits(array: <span class="kw-2">&amp;</span>ArrayData, use_nulls: bool) -&gt; ExtendNullBits {
@@ -834,26 +873,32 @@
 </span><span class="kw">pub struct </span>MutableArrayData&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[allow(dead_code)]
     </span>arrays: Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>ArrayData&gt;,
-    <span class="comment">// The attributes in [_MutableArrayData] cannot be in [MutableArrayData] due to
-    // mutability invariants (interior mutability):
-    // [MutableArrayData] contains a function that can only mutate [_MutableArrayData], not
-    // [MutableArrayData] itself
+    <span class="doccomment">/// The attributes in [_MutableArrayData] cannot be in [MutableArrayData] due to
+    /// mutability invariants (interior mutability):
+    /// [MutableArrayData] contains a function that can only mutate [_MutableArrayData], not
+    /// [MutableArrayData] itself
     </span>data: _MutableArrayData&lt;<span class="lifetime">'a</span>&gt;,
 
-    <span class="comment">// the child data of the `Array` in Dictionary arrays.
-    // This is not stored in `MutableArrayData` because these values constant and only needed
-    // at the end, when freezing [_MutableArrayData].
+    <span class="doccomment">/// the child data of the `Array` in Dictionary arrays.
+    /// This is not stored in `MutableArrayData` because these values constant and only needed
+    /// at the end, when freezing [_MutableArrayData].
     </span>dictionary: <span class="prelude-ty">Option</span>&lt;ArrayData&gt;,
 
-    <span class="comment">// function used to extend values from arrays. This function's lifetime is bound to the array
-    // because it reads values from it.
+    <span class="doccomment">/// Variadic data buffers referenced by views
+    /// This is not stored in `MutableArrayData` because these values constant  and only needed
+    /// at the end, when freezing [_MutableArrayData]
+    </span>variadic_data_buffers: Vec&lt;Buffer&gt;,
+
+    <span class="doccomment">/// function used to extend values from arrays. This function's lifetime is bound to the array
+    /// because it reads values from it.
     </span>extend_values: Vec&lt;Extend&lt;<span class="lifetime">'a</span>&gt;&gt;,
-    <span class="comment">// function used to extend nulls from arrays. This function's lifetime is bound to the array
-    // because it reads nulls from it.
+
+    <span class="doccomment">/// function used to extend nulls from arrays. This function's lifetime is bound to the array
+    /// because it reads nulls from it.
     </span>extend_null_bits: Vec&lt;ExtendNullBits&lt;<span class="lifetime">'a</span>&gt;&gt;,
 
-    <span class="comment">// function used to extend nulls.
-    // this is independent of the arrays and therefore has no lifetime.
+    <span class="doccomment">/// function used to extend nulls.
+    /// this is independent of the arrays and therefore has no lifetime.
     </span>extend_nulls: ExtendNulls,
 }
 
@@ -870,7 +915,7 @@
 /// Additionally validates that `max` fits into the
 /// the underlying primitive returning None if not
 </span><span class="kw">fn </span>build_extend_dictionary(array: <span class="kw-2">&amp;</span>ArrayData, offset: usize, max: usize) -&gt; <span class="prelude-ty">Option</span>&lt;Extend&gt; {
-    <span class="macro">macro_rules! </span>validate_and_build {
+    <span class="macro">macro_rules!</span> validate_and_build {
         (<span class="macro-nonterminal">$dt</span>: ty) =&gt; {{
             <span class="kw">let _</span>: <span class="macro-nonterminal">$dt </span>= max.try_into().ok()<span class="question-mark">?</span>;
             <span class="kw">let </span>offset: <span class="macro-nonterminal">$dt </span>= offset.try_into().ok()<span class="question-mark">?</span>;
@@ -891,6 +936,26 @@
         },
         <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
     }
+}
+
+<span class="doccomment">/// Builds an extend that adds `buffer_offset` to any buffer indices encountered
+</span><span class="kw">fn </span>build_extend_view(array: <span class="kw-2">&amp;</span>ArrayData, buffer_offset: u32) -&gt; Extend {
+    <span class="kw">let </span>views = array.buffer::&lt;u128&gt;(<span class="number">0</span>);
+    Box::new(
+        <span class="kw">move </span>|mutable: <span class="kw-2">&amp;mut </span>_MutableArrayData, <span class="kw">_</span>, start: usize, len: usize| {
+            mutable
+                .buffer1
+                .extend(views[start..start + len].iter().map(|v| {
+                    <span class="kw">let </span>len = <span class="kw-2">*</span>v <span class="kw">as </span>u32;
+                    <span class="kw">if </span>len &lt;= <span class="number">12 </span>{
+                        <span class="kw">return </span><span class="kw-2">*</span>v; <span class="comment">// Stored inline
+                    </span>}
+                    <span class="kw">let </span><span class="kw-2">mut </span>view = ByteView::from(<span class="kw-2">*</span>v);
+                    view.buffer_index += buffer_offset;
+                    view.into()
+                }))
+        },
+    )
 }
 
 <span class="kw">fn </span>build_extend(array: <span class="kw-2">&amp;</span>ArrayData) -&gt; Extend {
@@ -920,7 +985,11 @@
         DataType::Decimal256(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; primitive::build_extend::&lt;i256&gt;(array),
         DataType::Utf8 | DataType::Binary =&gt; variable_size::build_extend::&lt;i32&gt;(array),
         DataType::LargeUtf8 | DataType::LargeBinary =&gt; variable_size::build_extend::&lt;i64&gt;(array),
+        DataType::BinaryView | DataType::Utf8View =&gt; <span class="macro">unreachable!</span>(<span class="string">"should use build_extend_view"</span>),
         DataType::Map(<span class="kw">_</span>, <span class="kw">_</span>) | DataType::List(<span class="kw">_</span>) =&gt; list::build_extend::&lt;i32&gt;(array),
+        DataType::ListView(<span class="kw">_</span>) | DataType::LargeListView(<span class="kw">_</span>) =&gt; {
+            <span class="macro">unimplemented!</span>(<span class="string">"ListView/LargeListView not implemented"</span>)
+        }
         DataType::LargeList(<span class="kw">_</span>) =&gt; list::build_extend::&lt;i64&gt;(array),
         DataType::Dictionary(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">unreachable!</span>(<span class="string">"should use build_extend_dictionary"</span>),
         DataType::Struct(<span class="kw">_</span>) =&gt; structure::build_extend(array),
@@ -962,7 +1031,11 @@
         DataType::Decimal256(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; primitive::extend_nulls::&lt;i256&gt;,
         DataType::Utf8 | DataType::Binary =&gt; variable_size::extend_nulls::&lt;i32&gt;,
         DataType::LargeUtf8 | DataType::LargeBinary =&gt; variable_size::extend_nulls::&lt;i64&gt;,
+        DataType::BinaryView | DataType::Utf8View =&gt; primitive::extend_nulls::&lt;u128&gt;,
         DataType::Map(<span class="kw">_</span>, <span class="kw">_</span>) | DataType::List(<span class="kw">_</span>) =&gt; list::extend_nulls::&lt;i32&gt;,
+        DataType::ListView(<span class="kw">_</span>) | DataType::LargeListView(<span class="kw">_</span>) =&gt; {
+            <span class="macro">unimplemented!</span>(<span class="string">"ListView/LargeListView not implemented"</span>)
+        }
         DataType::LargeList(<span class="kw">_</span>) =&gt; list::extend_nulls::&lt;i64&gt;,
         DataType::Dictionary(child_data_type, <span class="kw">_</span>) =&gt; <span class="kw">match </span>child_data_type.as_ref() {
             DataType::UInt8 =&gt; primitive::extend_nulls::&lt;u8&gt;,
@@ -1113,8 +1186,13 @@
             | DataType::Binary
             | DataType::LargeUtf8
             | DataType::LargeBinary
+            | DataType::BinaryView
+            | DataType::Utf8View
             | DataType::Interval(<span class="kw">_</span>)
             | DataType::FixedSizeBinary(<span class="kw">_</span>) =&gt; <span class="macro">vec!</span>[],
+            DataType::ListView(<span class="kw">_</span>) | DataType::LargeListView(<span class="kw">_</span>) =&gt; {
+                <span class="macro">unimplemented!</span>(<span class="string">"ListView/LargeListView not implemented"</span>)
+            }
             DataType::Map(<span class="kw">_</span>, <span class="kw">_</span>) | DataType::List(<span class="kw">_</span>) | DataType::LargeList(<span class="kw">_</span>) =&gt; {
                 <span class="kw">let </span>children = arrays
                     .iter()
@@ -1244,6 +1322,15 @@
             <span class="kw">_ </span>=&gt; (<span class="prelude-val">None</span>, <span class="bool-val">false</span>),
         };
 
+        <span class="kw">let </span>variadic_data_buffers = <span class="kw">match </span><span class="kw-2">&amp;</span>data_type {
+            DataType::BinaryView | DataType::Utf8View =&gt; arrays
+                .iter()
+                .flat_map(|x| x.buffers().iter().skip(<span class="number">1</span>))
+                .map(Buffer::clone)
+                .collect(),
+            <span class="kw">_ </span>=&gt; <span class="macro">vec!</span>[],
+        };
+
         <span class="kw">let </span>extend_nulls = build_extend_nulls(data_type);
 
         <span class="kw">let </span>extend_null_bits = arrays
@@ -1276,6 +1363,20 @@
 
                 extend_values.expect(<span class="string">"MutableArrayData::new is infallible"</span>)
             }
+            DataType::BinaryView | DataType::Utf8View =&gt; {
+                <span class="kw">let </span><span class="kw-2">mut </span>next_offset = <span class="number">0u32</span>;
+                arrays
+                    .iter()
+                    .map(|arr| {
+                        <span class="kw">let </span>num_data_buffers = (arr.buffers().len() - <span class="number">1</span>) <span class="kw">as </span>u32;
+                        <span class="kw">let </span>offset = next_offset;
+                        next_offset = next_offset
+                            .checked_add(num_data_buffers)
+                            .expect(<span class="string">"view buffer index overflow"</span>);
+                        build_extend_view(arr, offset)
+                    })
+                    .collect()
+            }
             <span class="kw">_ </span>=&gt; arrays.iter().map(|array| build_extend(array)).collect(),
         };
 
@@ -1292,6 +1393,7 @@
             arrays,
             data,
             dictionary,
+            variadic_data_buffers,
             extend_values,
             extend_null_bits,
             extend_nulls,
@@ -1351,13 +1453,55 @@
 
     <span class="doccomment">/// Creates a [ArrayData] from the pushed regions up to this point, consuming `self`.
     </span><span class="kw">pub fn </span>freeze(<span class="self">self</span>) -&gt; ArrayData {
-        <span class="kw">unsafe </span>{ <span class="self">self</span>.data.freeze(<span class="self">self</span>.dictionary).build_unchecked() }
+        <span class="kw">unsafe </span>{ <span class="self">self</span>.into_builder().build_unchecked() }
     }
 
     <span class="doccomment">/// Creates a [ArrayDataBuilder] from the pushed regions up to this point, consuming `self`.
     /// This is useful for extending the default behavior of MutableArrayData.
     </span><span class="kw">pub fn </span>into_builder(<span class="self">self</span>) -&gt; ArrayDataBuilder {
-        <span class="self">self</span>.data.freeze(<span class="self">self</span>.dictionary)
+        <span class="kw">let </span>data = <span class="self">self</span>.data;
+
+        <span class="kw">let </span>buffers = <span class="kw">match </span>data.data_type {
+            DataType::Null | DataType::Struct(<span class="kw">_</span>) | DataType::FixedSizeList(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; {
+                <span class="macro">vec!</span>[]
+            }
+            DataType::BinaryView | DataType::Utf8View =&gt; {
+                <span class="kw">let </span><span class="kw-2">mut </span>b = <span class="self">self</span>.variadic_data_buffers;
+                b.insert(<span class="number">0</span>, data.buffer1.into());
+                b
+            }
+            DataType::Utf8 | DataType::Binary | DataType::LargeUtf8 | DataType::LargeBinary =&gt; {
+                <span class="macro">vec!</span>[data.buffer1.into(), data.buffer2.into()]
+            }
+            DataType::Union(<span class="kw">_</span>, mode) =&gt; {
+                <span class="kw">match </span>mode {
+                    <span class="comment">// Based on Union's DataTypeLayout
+                    </span>UnionMode::Sparse =&gt; <span class="macro">vec!</span>[data.buffer1.into()],
+                    UnionMode::Dense =&gt; <span class="macro">vec!</span>[data.buffer1.into(), data.buffer2.into()],
+                }
+            }
+            <span class="kw">_ </span>=&gt; <span class="macro">vec!</span>[data.buffer1.into()],
+        };
+
+        <span class="kw">let </span>child_data = <span class="kw">match </span>data.data_type {
+            DataType::Dictionary(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">vec!</span>[<span class="self">self</span>.dictionary.unwrap()],
+            <span class="kw">_ </span>=&gt; data.child_data.into_iter().map(|x| x.freeze()).collect(),
+        };
+
+        <span class="kw">let </span>nulls = data
+            .null_buffer
+            .map(|nulls| {
+                <span class="kw">let </span>bools = BooleanBuffer::new(nulls.into(), <span class="number">0</span>, data.len);
+                <span class="kw">unsafe </span>{ NullBuffer::new_unchecked(bools, data.null_count) }
+            })
+            .filter(|n| n.null_count() &gt; <span class="number">0</span>);
+
+        ArrayDataBuilder::new(data.data_type)
+            .offset(<span class="number">0</span>)
+            .len(data.len)
+            .nulls(nulls)
+            .buffers(buffers)
+            .child_data(child_data)
     }
 }
 

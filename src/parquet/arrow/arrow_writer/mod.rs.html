@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parquet/src/arrow/arrow_writer/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="parquet" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parquet/src/arrow/arrow_writer/mod.rs`."><title>mod.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="parquet" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../parquet/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -2993,6 +2993,59 @@
 <a href="#2991" id="2991">2991</a>
 <a href="#2992" id="2992">2992</a>
 <a href="#2993" id="2993">2993</a>
+<a href="#2994" id="2994">2994</a>
+<a href="#2995" id="2995">2995</a>
+<a href="#2996" id="2996">2996</a>
+<a href="#2997" id="2997">2997</a>
+<a href="#2998" id="2998">2998</a>
+<a href="#2999" id="2999">2999</a>
+<a href="#3000" id="3000">3000</a>
+<a href="#3001" id="3001">3001</a>
+<a href="#3002" id="3002">3002</a>
+<a href="#3003" id="3003">3003</a>
+<a href="#3004" id="3004">3004</a>
+<a href="#3005" id="3005">3005</a>
+<a href="#3006" id="3006">3006</a>
+<a href="#3007" id="3007">3007</a>
+<a href="#3008" id="3008">3008</a>
+<a href="#3009" id="3009">3009</a>
+<a href="#3010" id="3010">3010</a>
+<a href="#3011" id="3011">3011</a>
+<a href="#3012" id="3012">3012</a>
+<a href="#3013" id="3013">3013</a>
+<a href="#3014" id="3014">3014</a>
+<a href="#3015" id="3015">3015</a>
+<a href="#3016" id="3016">3016</a>
+<a href="#3017" id="3017">3017</a>
+<a href="#3018" id="3018">3018</a>
+<a href="#3019" id="3019">3019</a>
+<a href="#3020" id="3020">3020</a>
+<a href="#3021" id="3021">3021</a>
+<a href="#3022" id="3022">3022</a>
+<a href="#3023" id="3023">3023</a>
+<a href="#3024" id="3024">3024</a>
+<a href="#3025" id="3025">3025</a>
+<a href="#3026" id="3026">3026</a>
+<a href="#3027" id="3027">3027</a>
+<a href="#3028" id="3028">3028</a>
+<a href="#3029" id="3029">3029</a>
+<a href="#3030" id="3030">3030</a>
+<a href="#3031" id="3031">3031</a>
+<a href="#3032" id="3032">3032</a>
+<a href="#3033" id="3033">3033</a>
+<a href="#3034" id="3034">3034</a>
+<a href="#3035" id="3035">3035</a>
+<a href="#3036" id="3036">3036</a>
+<a href="#3037" id="3037">3037</a>
+<a href="#3038" id="3038">3038</a>
+<a href="#3039" id="3039">3039</a>
+<a href="#3040" id="3040">3040</a>
+<a href="#3041" id="3041">3041</a>
+<a href="#3042" id="3042">3042</a>
+<a href="#3043" id="3043">3043</a>
+<a href="#3044" id="3044">3044</a>
+<a href="#3045" id="3045">3045</a>
+<a href="#3046" id="3046">3046</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -3075,6 +3128,32 @@
 ///
 /// assert_eq!(to_write, read);
 /// ```
+///
+/// ## Memory Limiting
+///
+/// The nature of parquet forces buffering of an entire row group before it can be flushed
+/// to the underlying writer. Data is buffered in its encoded form, to reduce memory usage,
+/// but if writing rows containing large strings or very nested data, this may still result in
+/// non-trivial memory usage.
+///
+/// [`ArrowWriter::in_progress_size`] can be used to track the size of the buffered row group,
+/// and potentially trigger an early flush of a row group based on a memory threshold and/or
+/// global memory pressure. However, users should be aware that smaller row groups will result
+/// in higher metadata overheads, and may worsen compression ratios and query performance.
+///
+/// ```no_run
+/// # use std::io::Write;
+/// # use arrow_array::RecordBatch;
+/// # use parquet::arrow::ArrowWriter;
+/// # let mut writer: ArrowWriter&lt;Vec&lt;u8&gt;&gt; = todo!();
+/// # let batch: RecordBatch = todo!();
+/// writer.write(&amp;batch).unwrap();
+/// // Trigger an early flush if buffered size exceeds 1_000_000
+/// if writer.in_progress_size() &gt; 1_000_000 {
+///     writer.flush().unwrap();
+/// }
+/// ```
+///
 </span><span class="kw">pub struct </span>ArrowWriter&lt;W: Write&gt; {
     <span class="doccomment">/// Underlying Parquet writer
     </span>writer: SerializedFileWriter&lt;W&gt;,
@@ -3174,6 +3253,11 @@
             .unwrap_or_default()
     }
 
+    <span class="doccomment">/// Returns the number of bytes written by this instance
+    </span><span class="kw">pub fn </span>bytes_written(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.writer.bytes_written()
+    }
+
     <span class="doccomment">/// Encodes the provided [`RecordBatch`]
     ///
     /// If this would cause the current row group to exceed [`WriterProperties::max_row_group_size`]
@@ -3234,6 +3318,19 @@
         <span class="self">self</span>.writer.append_key_value_metadata(kv_metadata)
     }
 
+    <span class="doccomment">/// Returns a reference to the underlying writer.
+    </span><span class="kw">pub fn </span>inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>W {
+        <span class="self">self</span>.writer.inner()
+    }
+
+    <span class="doccomment">/// Returns a mutable reference to the underlying writer.
+    ///
+    /// It is inadvisable to directly write to the underlying writer, doing so
+    /// will likely result in a corrupt parquet file
+    </span><span class="kw">pub fn </span>inner_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>W {
+        <span class="self">self</span>.writer.inner_mut()
+    }
+
     <span class="doccomment">/// Flushes any outstanding data and returns the underlying writer.
     </span><span class="kw">pub fn </span>into_inner(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;W&gt; {
         <span class="self">self</span>.flush()<span class="question-mark">?</span>;
@@ -3241,9 +3338,18 @@
     }
 
     <span class="doccomment">/// Close and finalize the underlying Parquet writer
-    </span><span class="kw">pub fn </span>close(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">crate</span>::format::FileMetaData&gt; {
+    ///
+    /// Unlike [`Self::close`] this does not consume self
+    ///
+    /// Attempting to write after calling finish will result in an error
+    </span><span class="kw">pub fn </span>finish(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">crate</span>::format::FileMetaData&gt; {
         <span class="self">self</span>.flush()<span class="question-mark">?</span>;
-        <span class="self">self</span>.writer.close()
+        <span class="self">self</span>.writer.finish()
+    }
+
+    <span class="doccomment">/// Close and finalize the underlying Parquet writer
+    </span><span class="kw">pub fn </span>close(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">crate</span>::format::FileMetaData&gt; {
+        <span class="self">self</span>.finish()
     }
 }
 
@@ -3944,18 +4050,15 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="kw">use </span>bytes::Bytes;
     <span class="kw">use </span>std::fs::File;
-    <span class="kw">use </span>std::sync::Arc;
 
     <span class="kw">use </span><span class="kw">crate</span>::arrow::arrow_reader::{ParquetRecordBatchReader, ParquetRecordBatchReaderBuilder};
     <span class="kw">use </span><span class="kw">crate</span>::arrow::ARROW_SCHEMA_META_KEY;
     <span class="kw">use </span>arrow::datatypes::ToByteSlice;
-    <span class="kw">use </span>arrow::datatypes::{DataType, Field, Schema, UInt32Type, UInt8Type};
+    <span class="kw">use </span>arrow::datatypes::{DataType, Schema};
     <span class="kw">use </span>arrow::error::Result <span class="kw">as </span>ArrowResult;
     <span class="kw">use </span>arrow::util::pretty::pretty_format_batches;
     <span class="kw">use </span>arrow::{array::<span class="kw-2">*</span>, buffer::Buffer};
-    <span class="kw">use </span>arrow_array::RecordBatch;
     <span class="kw">use </span>arrow_buffer::NullBuffer;
     <span class="kw">use </span>arrow_schema::Fields;
 
@@ -4145,7 +4248,7 @@
         <span class="kw">let </span>schema = Schema::new(<span class="macro">vec!</span>[string_field, binary_field]);
 
         <span class="kw">let </span>raw_string_values = <span class="macro">vec!</span>[<span class="string">"foo"</span>, <span class="string">"bar"</span>, <span class="string">"baz"</span>, <span class="string">"quux"</span>];
-        <span class="kw">let </span>raw_binary_values = <span class="macro">vec!</span>[
+        <span class="kw">let </span>raw_binary_values = [
             <span class="string">b"foo"</span>.to_vec(),
             <span class="string">b"bar"</span>.to_vec(),
             <span class="string">b"baz"</span>.to_vec(),
@@ -5743,7 +5846,8 @@
         <span class="comment">// starts empty
         </span><span class="macro">assert_eq!</span>(writer.in_progress_size(), <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(writer.in_progress_rows(), <span class="number">0</span>);
-        writer.write(<span class="kw-2">&amp;</span>batch).unwrap();
+        <span class="macro">assert_eq!</span>(writer.bytes_written(), <span class="number">4</span>); <span class="comment">// Initial header
+        </span>writer.write(<span class="kw-2">&amp;</span>batch).unwrap();
 
         <span class="comment">// updated on write
         </span><span class="kw">let </span>initial_size = writer.in_progress_size();
@@ -5755,10 +5859,12 @@
         <span class="macro">assert!</span>(writer.in_progress_size() &gt; initial_size);
         <span class="macro">assert_eq!</span>(writer.in_progress_rows(), <span class="number">10</span>);
 
-        <span class="comment">// cleared on flush
-        </span>writer.flush().unwrap();
+        <span class="comment">// in progress tracking is cleared, but the overall data written is updated
+        </span><span class="kw">let </span>pre_flush_bytes_written = writer.bytes_written();
+        writer.flush().unwrap();
         <span class="macro">assert_eq!</span>(writer.in_progress_size(), <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(writer.in_progress_rows(), <span class="number">0</span>);
+        <span class="macro">assert!</span>(writer.bytes_written() &gt; pre_flush_bytes_written);
 
         writer.close().unwrap();
     }

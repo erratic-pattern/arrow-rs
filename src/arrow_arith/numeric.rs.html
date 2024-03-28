@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-arith/src/numeric.rs`."><title>numeric.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_arith" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-arith/src/numeric.rs`."><title>numeric.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_arith" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../arrow_arith/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1598,7 +1598,7 @@
     arithmetic_op(Op::Rem, lhs, rhs)
 }
 
-<span class="macro">macro_rules! </span>neg_checked {
+<span class="macro">macro_rules!</span> neg_checked {
     (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$a</span>:ident) =&gt; {{
         <span class="kw">let </span>array = <span class="macro-nonterminal">$a
             </span>.as_primitive::&lt;<span class="macro-nonterminal">$t</span>&gt;()
@@ -1607,7 +1607,7 @@
     }};
 }
 
-<span class="macro">macro_rules! </span>neg_wrapping {
+<span class="macro">macro_rules!</span> neg_wrapping {
     (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$a</span>:ident) =&gt; {{
         <span class="kw">let </span>array = <span class="macro-nonterminal">$a</span>.as_primitive::&lt;<span class="macro-nonterminal">$t</span>&gt;().unary::&lt;<span class="kw">_</span>, <span class="macro-nonterminal">$t</span>&gt;(|x| x.neg_wrapping());
         <span class="prelude-val">Ok</span>(Arc::new(array))
@@ -1683,7 +1683,7 @@
 
 <span class="doccomment">/// Negates each element of  `array`, wrapping on overflow for [`DataType::is_integer`]
 </span><span class="kw">pub fn </span>neg_wrapping(array: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Array) -&gt; <span class="prelude-ty">Result</span>&lt;ArrayRef, ArrowError&gt; {
-    <span class="macro">downcast_integer! </span>{
+    <span class="macro">downcast_integer!</span> {
         array.data_type() =&gt; (neg_wrapping, array),
         <span class="kw">_ </span>=&gt; neg(array),
     }
@@ -1728,7 +1728,7 @@
     <span class="kw">use </span>IntervalUnit::<span class="kw-2">*</span>;
     <span class="kw">use </span>TimeUnit::<span class="kw-2">*</span>;
 
-    <span class="macro">macro_rules! </span>integer_helper {
+    <span class="macro">macro_rules!</span> integer_helper {
         (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$op</span>:ident, <span class="macro-nonterminal">$l</span>:ident, <span class="macro-nonterminal">$l_scalar</span>:ident, <span class="macro-nonterminal">$r</span>:ident, <span class="macro-nonterminal">$r_scalar</span>:ident) =&gt; {
             integer_op::&lt;<span class="macro-nonterminal">$t</span>&gt;(<span class="macro-nonterminal">$op</span>, <span class="macro-nonterminal">$l</span>, <span class="macro-nonterminal">$l_scalar</span>, <span class="macro-nonterminal">$r</span>, <span class="macro-nonterminal">$r_scalar</span>)
         };
@@ -1736,7 +1736,7 @@
 
     <span class="kw">let </span>(l, l_scalar) = lhs.get();
     <span class="kw">let </span>(r, r_scalar) = rhs.get();
-    <span class="macro">downcast_integer! </span>{
+    <span class="macro">downcast_integer!</span> {
         l.data_type(), r.data_type() =&gt; (integer_helper, op, l, l_scalar, r, r_scalar),
         (Float16, Float16) =&gt; float_op::&lt;Float16Type&gt;(op, l, l_scalar, r, r_scalar),
         (Float32, Float32) =&gt; float_op::&lt;Float32Type&gt;(op, l, l_scalar, r, r_scalar),
@@ -1768,7 +1768,7 @@
 }
 
 <span class="doccomment">/// Perform an infallible binary operation on potentially scalar inputs
-</span><span class="macro">macro_rules! </span>op {
+</span><span class="macro">macro_rules!</span> op {
     (<span class="macro-nonterminal">$l</span>:ident, <span class="macro-nonterminal">$l_s</span>:expr, <span class="macro-nonterminal">$r</span>:ident, <span class="macro-nonterminal">$r_s</span>:expr, <span class="macro-nonterminal">$op</span>:expr) =&gt; {
         <span class="kw">match </span>(<span class="macro-nonterminal">$l_s</span>, <span class="macro-nonterminal">$r_s</span>) {
             (<span class="bool-val">true</span>, <span class="bool-val">true</span>) | (<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; binary(<span class="macro-nonterminal">$l</span>, <span class="macro-nonterminal">$r</span>, |<span class="macro-nonterminal">$l</span>, <span class="macro-nonterminal">$r</span>| <span class="macro-nonterminal">$op</span>)<span class="question-mark">?</span>,
@@ -1785,7 +1785,7 @@
 }
 
 <span class="doccomment">/// Same as `op` but with a type hint for the returned array
-</span><span class="macro">macro_rules! </span>op_ref {
+</span><span class="macro">macro_rules!</span> op_ref {
     (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$l</span>:ident, <span class="macro-nonterminal">$l_s</span>:expr, <span class="macro-nonterminal">$r</span>:ident, <span class="macro-nonterminal">$r_s</span>:expr, <span class="macro-nonterminal">$op</span>:expr) =&gt; {{
         <span class="kw">let </span>array: PrimitiveArray&lt;<span class="macro-nonterminal">$t</span>&gt; = <span class="macro">op!</span>(<span class="macro-nonterminal">$l</span>, <span class="macro-nonterminal">$l_s</span>, <span class="macro-nonterminal">$r</span>, <span class="macro-nonterminal">$r_s</span>, <span class="macro-nonterminal">$op</span>);
         Arc::new(array)
@@ -1793,7 +1793,7 @@
 }
 
 <span class="doccomment">/// Perform a fallible binary operation on potentially scalar inputs
-</span><span class="macro">macro_rules! </span>try_op {
+</span><span class="macro">macro_rules!</span> try_op {
     (<span class="macro-nonterminal">$l</span>:ident, <span class="macro-nonterminal">$l_s</span>:expr, <span class="macro-nonterminal">$r</span>:ident, <span class="macro-nonterminal">$r_s</span>:expr, <span class="macro-nonterminal">$op</span>:expr) =&gt; {
         <span class="kw">match </span>(<span class="macro-nonterminal">$l_s</span>, <span class="macro-nonterminal">$r_s</span>) {
             (<span class="bool-val">true</span>, <span class="bool-val">true</span>) | (<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; try_binary(<span class="macro-nonterminal">$l</span>, <span class="macro-nonterminal">$r</span>, |<span class="macro-nonterminal">$l</span>, <span class="macro-nonterminal">$r</span>| <span class="macro-nonterminal">$op</span>)<span class="question-mark">?</span>,
@@ -1810,7 +1810,7 @@
 }
 
 <span class="doccomment">/// Same as `try_op` but with a type hint for the returned array
-</span><span class="macro">macro_rules! </span>try_op_ref {
+</span><span class="macro">macro_rules!</span> try_op_ref {
     (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$l</span>:ident, <span class="macro-nonterminal">$l_s</span>:expr, <span class="macro-nonterminal">$r</span>:ident, <span class="macro-nonterminal">$r_s</span>:expr, <span class="macro-nonterminal">$op</span>:expr) =&gt; {{
         <span class="kw">let </span>array: PrimitiveArray&lt;<span class="macro-nonterminal">$t</span>&gt; = <span class="macro">try_op!</span>(<span class="macro-nonterminal">$l</span>, <span class="macro-nonterminal">$l_s</span>, <span class="macro-nonterminal">$r</span>, <span class="macro-nonterminal">$r_s</span>, <span class="macro-nonterminal">$op</span>);
         Arc::new(array)
@@ -1873,7 +1873,7 @@
     <span class="kw">fn </span>sub_month_day_nano(timestamp: i64, delta: i128, tz: Tz) -&gt; <span class="prelude-ty">Option</span>&lt;i64&gt;;
 }
 
-<span class="macro">macro_rules! </span>timestamp {
+<span class="macro">macro_rules!</span> timestamp {
     (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$d</span>:ty) =&gt; {
         <span class="kw">impl </span>TimestampOp <span class="kw">for </span><span class="macro-nonterminal">$t </span>{
             <span class="kw">type </span>Duration = <span class="macro-nonterminal">$d</span>;
@@ -2036,7 +2036,7 @@
     <span class="kw">fn </span>sub_month_day_nano(timestamp: <span class="self">Self</span>::Native, delta: i128) -&gt; <span class="self">Self</span>::Native;
 }
 
-<span class="macro">macro_rules! </span>date {
+<span class="macro">macro_rules!</span> date {
     (<span class="macro-nonterminal">$t</span>:ty) =&gt; {
         <span class="kw">impl </span>DateOp <span class="kw">for </span><span class="macro-nonterminal">$t </span>{
             <span class="kw">fn </span>add_year_month(left: <span class="self">Self</span>::Native, right: i32) -&gt; <span class="self">Self</span>::Native {

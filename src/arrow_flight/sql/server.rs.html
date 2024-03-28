@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-flight/src/sql/server.rs`."><title>server.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_flight" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-flight/src/sql/server.rs`."><title>server.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_flight" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../arrow_flight/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1027,6 +1027,24 @@
 <a href="#1025" id="1025">1025</a>
 <a href="#1026" id="1026">1026</a>
 <a href="#1027" id="1027">1027</a>
+<a href="#1028" id="1028">1028</a>
+<a href="#1029" id="1029">1029</a>
+<a href="#1030" id="1030">1030</a>
+<a href="#1031" id="1031">1031</a>
+<a href="#1032" id="1032">1032</a>
+<a href="#1033" id="1033">1033</a>
+<a href="#1034" id="1034">1034</a>
+<a href="#1035" id="1035">1035</a>
+<a href="#1036" id="1036">1036</a>
+<a href="#1037" id="1037">1037</a>
+<a href="#1038" id="1038">1038</a>
+<a href="#1039" id="1039">1039</a>
+<a href="#1040" id="1040">1040</a>
+<a href="#1041" id="1041">1041</a>
+<a href="#1042" id="1042">1042</a>
+<a href="#1043" id="1043">1043</a>
+<a href="#1044" id="1044">1044</a>
+<a href="#1045" id="1045">1045</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -1062,12 +1080,13 @@
     CommandGetPrimaryKeys, CommandGetSqlInfo, CommandGetTableTypes, CommandGetTables,
     CommandGetXdbcTypeInfo, CommandPreparedStatementQuery, CommandPreparedStatementUpdate,
     CommandStatementQuery, CommandStatementSubstraitPlan, CommandStatementUpdate,
-    DoPutUpdateResult, ProstMessageExt, SqlInfo, TicketStatementQuery,
+    DoPutPreparedStatementResult, DoPutUpdateResult, ProstMessageExt, SqlInfo,
+    TicketStatementQuery,
 };
 <span class="kw">use crate</span>::{
-    flight_service_server::FlightService, Action, ActionType, Criteria, Empty, FlightData,
-    FlightDescriptor, FlightInfo, HandshakeRequest, HandshakeResponse, PutResult, SchemaResult,
-    Ticket,
+    flight_service_server::FlightService, gen::PollInfo, Action, ActionType, Criteria, Empty,
+    FlightData, FlightDescriptor, FlightInfo, HandshakeRequest, HandshakeResponse, PutResult,
+    SchemaResult, Ticket,
 };
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">static </span>CREATE_PREPARED_STATEMENT: <span class="kw-2">&amp;</span>str = <span class="string">"CreatePreparedStatement"</span>;
@@ -1426,11 +1445,15 @@
     }
 
     <span class="doccomment">/// Bind parameters to given prepared statement.
+    ///
+    /// Returns an opaque handle that the client should pass
+    /// back to the server during subsequent requests with this
+    /// prepared statement.
     </span><span class="kw">async fn </span>do_put_prepared_statement_query(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         _query: CommandPreparedStatementQuery,
         _request: Request&lt;PeekableFlightDataStream&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Response&lt;&lt;<span class="self">Self </span><span class="kw">as </span>FlightService&gt;::DoPutStream&gt;, Status&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;DoPutPreparedStatementResult, Status&gt; {
         <span class="prelude-val">Err</span>(Status::unimplemented(
             <span class="string">"do_put_prepared_statement_query has no default implementation"</span>,
         ))
@@ -1661,6 +1684,13 @@
         }
     }
 
+    <span class="kw">async fn </span>poll_flight_info(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        _request: Request&lt;FlightDescriptor&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Response&lt;PollInfo&gt;, Status&gt; {
+        <span class="prelude-val">Err</span>(Status::unimplemented(<span class="string">"Not yet implemented"</span>))
+    }
+
     <span class="kw">async fn </span>get_schema(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         _request: Request&lt;FlightDescriptor&gt;,
@@ -1731,8 +1761,14 @@
                 <span class="prelude-val">Ok</span>(Response::new(Box::pin(output)))
             }
             Command::CommandPreparedStatementQuery(command) =&gt; {
-                <span class="self">self</span>.do_put_prepared_statement_query(command, request).<span class="kw">await
-            </span>}
+                <span class="kw">let </span>result = <span class="self">self
+                    </span>.do_put_prepared_statement_query(command, request)
+                    .<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="kw">let </span>output = futures::stream::iter(<span class="macro">vec!</span>[<span class="prelude-val">Ok</span>(PutResult {
+                    app_metadata: result.as_any().encode_to_vec().into(),
+                })]);
+                <span class="prelude-val">Ok</span>(Response::new(Box::pin(output)))
+            }
             Command::CommandStatementSubstraitPlan(command) =&gt; {
                 <span class="kw">let </span>record_count = <span class="self">self</span>.do_put_substrait_plan(command, request).<span class="kw">await</span><span class="question-mark">?</span>;
                 <span class="kw">let </span>result = DoPutUpdateResult { record_count };

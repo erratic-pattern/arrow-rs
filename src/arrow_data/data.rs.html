@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-data/src/data.rs`."><title>data.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_data" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-data/src/data.rs`."><title>data.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_data" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../arrow_data/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -2122,6 +2122,16 @@
 <a href="#2120" id="2120">2120</a>
 <a href="#2121" id="2121">2121</a>
 <a href="#2122" id="2122">2122</a>
+<a href="#2123" id="2123">2123</a>
+<a href="#2124" id="2124">2124</a>
+<a href="#2125" id="2125">2125</a>
+<a href="#2126" id="2126">2126</a>
+<a href="#2127" id="2127">2127</a>
+<a href="#2128" id="2128">2128</a>
+<a href="#2129" id="2129">2129</a>
+<a href="#2130" id="2130">2130</a>
+<a href="#2131" id="2131">2131</a>
+<a href="#2132" id="2132">2132</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -2146,12 +2156,11 @@
 <span class="kw">use </span>arrow_buffer::buffer::{BooleanBuffer, NullBuffer};
 <span class="kw">use </span>arrow_buffer::{bit_util, i256, ArrowNativeType, Buffer, MutableBuffer};
 <span class="kw">use </span>arrow_schema::{ArrowError, DataType, UnionMode};
-<span class="kw">use </span>std::convert::TryInto;
 <span class="kw">use </span>std::mem;
 <span class="kw">use </span>std::ops::Range;
 <span class="kw">use </span>std::sync::Arc;
 
-<span class="kw">use </span><span class="kw">crate</span>::equal;
+<span class="kw">use crate</span>::{equal, validate_binary_view, validate_string_view};
 
 <span class="doccomment">/// A collection of [`Buffer`]
 </span><span class="attr">#[doc(hidden)]
@@ -2233,18 +2242,30 @@
             </span>buffer.push(<span class="number">0i64</span>);
             [buffer, MutableBuffer::new(capacity * mem::size_of::&lt;u8&gt;())]
         }
+        DataType::BinaryView | DataType::Utf8View =&gt; [
+            MutableBuffer::new(capacity * mem::size_of::&lt;u128&gt;()),
+            empty_buffer,
+        ],
         DataType::List(<span class="kw">_</span>) | DataType::Map(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; {
             <span class="comment">// offset buffer always starts with a zero
             </span><span class="kw">let </span><span class="kw-2">mut </span>buffer = MutableBuffer::new((<span class="number">1 </span>+ capacity) * mem::size_of::&lt;i32&gt;());
             buffer.push(<span class="number">0i32</span>);
             [buffer, empty_buffer]
         }
+        DataType::ListView(<span class="kw">_</span>) =&gt; [
+            MutableBuffer::new(capacity * mem::size_of::&lt;i32&gt;()),
+            MutableBuffer::new(capacity * mem::size_of::&lt;i32&gt;()),
+        ],
         DataType::LargeList(<span class="kw">_</span>) =&gt; {
             <span class="comment">// offset buffer always starts with a zero
             </span><span class="kw">let </span><span class="kw-2">mut </span>buffer = MutableBuffer::new((<span class="number">1 </span>+ capacity) * mem::size_of::&lt;i64&gt;());
             buffer.push(<span class="number">0i64</span>);
             [buffer, empty_buffer]
         }
+        DataType::LargeListView(<span class="kw">_</span>) =&gt; [
+            MutableBuffer::new(capacity * mem::size_of::&lt;i64&gt;()),
+            MutableBuffer::new(capacity * mem::size_of::&lt;i64&gt;()),
+        ],
         DataType::FixedSizeBinary(size) =&gt; {
             [MutableBuffer::new(capacity * <span class="kw-2">*</span>size <span class="kw">as </span>usize), empty_buffer]
         }
@@ -2269,29 +2290,6 @@
                 }
             }
         }
-    }
-}
-
-<span class="doccomment">/// Maps 2 [`MutableBuffer`]s into a vector of [Buffer]s whose size depends on `data_type`.
-</span><span class="attr">#[inline]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>into_buffers(
-    data_type: <span class="kw-2">&amp;</span>DataType,
-    buffer1: MutableBuffer,
-    buffer2: MutableBuffer,
-) -&gt; Vec&lt;Buffer&gt; {
-    <span class="kw">match </span>data_type {
-        DataType::Null | DataType::Struct(<span class="kw">_</span>) | DataType::FixedSizeList(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">vec!</span>[],
-        DataType::Utf8 | DataType::Binary | DataType::LargeUtf8 | DataType::LargeBinary =&gt; {
-            <span class="macro">vec!</span>[buffer1.into(), buffer2.into()]
-        }
-        DataType::Union(<span class="kw">_</span>, mode) =&gt; {
-            <span class="kw">match </span>mode {
-                <span class="comment">// Based on Union's DataTypeLayout
-                </span>UnionMode::Sparse =&gt; <span class="macro">vec!</span>[buffer1.into()],
-                UnionMode::Dense =&gt; <span class="macro">vec!</span>[buffer1.into(), buffer2.into()],
-            }
-        }
-        <span class="kw">_ </span>=&gt; <span class="macro">vec!</span>[buffer1.into()],
     }
 }
 
@@ -2858,7 +2856,10 @@
             )));
         }
 
-        <span class="kw">if </span><span class="self">self</span>.buffers.len() != layout.buffers.len() {
+        <span class="comment">// Check data buffers length for view types and other types
+        </span><span class="kw">if </span><span class="self">self</span>.buffers.len() &lt; layout.buffers.len()
+            || (!layout.variadic &amp;&amp; <span class="self">self</span>.buffers.len() != layout.buffers.len())
+        {
             <span class="kw">return </span><span class="prelude-val">Err</span>(ArrowError::InvalidArgumentError(<span class="macro">format!</span>(
                 <span class="string">"Expected {} buffers in array of type {:?}, got {}"</span>,
                 layout.buffers.len(),
@@ -3353,6 +3354,14 @@
             DataType::LargeUtf8 =&gt; <span class="self">self</span>.validate_utf8::&lt;i64&gt;(),
             DataType::Binary =&gt; <span class="self">self</span>.validate_offsets_full::&lt;i32&gt;(<span class="self">self</span>.buffers[<span class="number">1</span>].len()),
             DataType::LargeBinary =&gt; <span class="self">self</span>.validate_offsets_full::&lt;i64&gt;(<span class="self">self</span>.buffers[<span class="number">1</span>].len()),
+            DataType::BinaryView =&gt; {
+                <span class="kw">let </span>views = <span class="self">self</span>.typed_buffer::&lt;u128&gt;(<span class="number">0</span>, <span class="self">self</span>.len)<span class="question-mark">?</span>;
+                validate_binary_view(views, <span class="kw-2">&amp;</span><span class="self">self</span>.buffers[<span class="number">1</span>..])
+            }
+            DataType::Utf8View =&gt; {
+                <span class="kw">let </span>views = <span class="self">self</span>.typed_buffer::&lt;u128&gt;(<span class="number">0</span>, <span class="self">self</span>.len)<span class="question-mark">?</span>;
+                validate_string_view(views, <span class="kw-2">&amp;</span><span class="self">self</span>.buffers[<span class="number">1</span>..])
+            }
             DataType::List(<span class="kw">_</span>) | DataType::Map(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; {
                 <span class="kw">let </span>child = <span class="kw-2">&amp;</span><span class="self">self</span>.child_data[<span class="number">0</span>];
                 <span class="self">self</span>.validate_offsets_full::&lt;i32&gt;(child.len)
@@ -3624,10 +3633,12 @@
         DataType::Null =&gt; DataTypeLayout {
             buffers: <span class="macro">vec!</span>[],
             can_contain_null_mask: <span class="bool-val">false</span>,
+            variadic: <span class="bool-val">false</span>,
         },
         DataType::Boolean =&gt; DataTypeLayout {
             buffers: <span class="macro">vec!</span>[BufferSpec::BitMap],
             can_contain_null_mask: <span class="bool-val">true</span>,
+            variadic: <span class="bool-val">false</span>,
         },
         DataType::Int8 =&gt; DataTypeLayout::new_fixed_width::&lt;i8&gt;(),
         DataType::Int16 =&gt; DataTypeLayout::new_fixed_width::&lt;i16&gt;(),
@@ -3659,14 +3670,19 @@
             DataTypeLayout {
                 buffers: <span class="macro">vec!</span>[spec],
                 can_contain_null_mask: <span class="bool-val">true</span>,
+                variadic: <span class="bool-val">false</span>,
             }
         }
         DataType::Binary =&gt; DataTypeLayout::new_binary::&lt;i32&gt;(),
         DataType::LargeBinary =&gt; DataTypeLayout::new_binary::&lt;i64&gt;(),
         DataType::Utf8 =&gt; DataTypeLayout::new_binary::&lt;i32&gt;(),
         DataType::LargeUtf8 =&gt; DataTypeLayout::new_binary::&lt;i64&gt;(),
+        DataType::BinaryView | DataType::Utf8View =&gt; DataTypeLayout::new_view(),
         DataType::FixedSizeList(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; DataTypeLayout::new_empty(), <span class="comment">// all in child data
         </span>DataType::List(<span class="kw">_</span>) =&gt; DataTypeLayout::new_fixed_width::&lt;i32&gt;(),
+        DataType::ListView(<span class="kw">_</span>) | DataType::LargeListView(<span class="kw">_</span>) =&gt; {
+            <span class="macro">unimplemented!</span>(<span class="string">"ListView/LargeListView not implemented"</span>)
+        }
         DataType::LargeList(<span class="kw">_</span>) =&gt; DataTypeLayout::new_fixed_width::&lt;i64&gt;(),
         DataType::Map(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; DataTypeLayout::new_fixed_width::&lt;i32&gt;(),
         DataType::Struct(<span class="kw">_</span>) =&gt; DataTypeLayout::new_empty(), <span class="comment">// all in child data,
@@ -3693,6 +3709,7 @@
                     }
                 },
                 can_contain_null_mask: <span class="bool-val">false</span>,
+                variadic: <span class="bool-val">false</span>,
             }
         }
         DataType::Dictionary(key_type, _value_type) =&gt; layout(key_type),
@@ -3708,6 +3725,11 @@
 
     <span class="doccomment">/// Can contain a null bitmask
     </span><span class="kw">pub </span>can_contain_null_mask: bool,
+
+    <span class="doccomment">/// This field only applies to the view type [`DataType::BinaryView`] and [`DataType::Utf8View`]
+    /// If `variadic` is true, the number of buffers expected is only lower-bounded by
+    /// buffers.len(). Buffers that exceed the lower bound are legal.
+    </span><span class="kw">pub </span>variadic: bool,
 }
 
 <span class="kw">impl </span>DataTypeLayout {
@@ -3719,6 +3741,7 @@
                 alignment: mem::align_of::&lt;T&gt;(),
             }],
             can_contain_null_mask: <span class="bool-val">true</span>,
+            variadic: <span class="bool-val">false</span>,
         }
     }
 
@@ -3729,6 +3752,7 @@
         <span class="self">Self </span>{
             buffers: <span class="macro">vec!</span>[],
             can_contain_null_mask: <span class="bool-val">true</span>,
+            variadic: <span class="bool-val">false</span>,
         }
     }
 
@@ -3747,6 +3771,19 @@
                 </span>BufferSpec::VariableWidth,
             ],
             can_contain_null_mask: <span class="bool-val">true</span>,
+            variadic: <span class="bool-val">false</span>,
+        }
+    }
+
+    <span class="doccomment">/// Describes a view type
+    </span><span class="kw">pub fn </span>new_view() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            buffers: <span class="macro">vec!</span>[BufferSpec::FixedWidth {
+                byte_width: mem::size_of::&lt;u128&gt;(),
+                alignment: mem::align_of::&lt;u128&gt;(),
+            }],
+            can_contain_null_mask: <span class="bool-val">true</span>,
+            variadic: <span class="bool-val">true</span>,
         }
     }
 }
@@ -3952,7 +3989,7 @@
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use </span>arrow_schema::{Field, UnionFields};
+    <span class="kw">use </span>arrow_schema::Field;
 
     <span class="comment">// See arrow/tests/array_data_validation.rs for test of array validation
 
@@ -4198,23 +4235,6 @@
         <span class="macro">assert!</span>(contains_nulls(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>buffer), <span class="number">0</span>, <span class="number">3</span>));
         <span class="macro">assert!</span>(!contains_nulls(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>buffer), <span class="number">3</span>, <span class="number">2</span>));
         <span class="macro">assert!</span>(!contains_nulls(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>buffer), <span class="number">0</span>, <span class="number">0</span>));
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_into_buffers() {
-        <span class="kw">let </span>data_types = <span class="macro">vec!</span>[
-            DataType::Union(UnionFields::empty(), UnionMode::Dense),
-            DataType::Union(UnionFields::empty(), UnionMode::Sparse),
-        ];
-
-        <span class="kw">for </span>data_type <span class="kw">in </span>data_types {
-            <span class="kw">let </span>buffers = new_buffers(<span class="kw-2">&amp;</span>data_type, <span class="number">0</span>);
-            <span class="kw">let </span>[buffer1, buffer2] = buffers;
-            <span class="kw">let </span>buffers = into_buffers(<span class="kw-2">&amp;</span>data_type, buffer1, buffer2);
-
-            <span class="kw">let </span>layout = layout(<span class="kw-2">&amp;</span>data_type);
-            <span class="macro">assert_eq!</span>(buffers.len(), layout.buffers.len());
-        }
     }
 
     <span class="attr">#[test]

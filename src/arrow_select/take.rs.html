@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-select/src/take.rs`."><title>take.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_select" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-select/src/take.rs`."><title>take.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_select" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../arrow_select/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -2108,6 +2108,10 @@
 <a href="#2106" id="2106">2106</a>
 <a href="#2107" id="2107">2107</a>
 <a href="#2108" id="2108">2108</a>
+<a href="#2109" id="2109">2109</a>
+<a href="#2110" id="2110">2110</a>
+<a href="#2111" id="2111">2111</a>
+<a href="#2112" id="2112">2112</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -2188,7 +2192,7 @@
     options: <span class="prelude-ty">Option</span>&lt;TakeOptions&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;ArrayRef, ArrowError&gt; {
     <span class="kw">let </span>options = options.unwrap_or_default();
-    <span class="macro">macro_rules! </span>helper {
+    <span class="macro">macro_rules!</span> helper {
         (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$values</span>:expr, <span class="macro-nonterminal">$indices</span>:expr, <span class="macro-nonterminal">$options</span>:expr) =&gt; {{
             <span class="kw">let </span>indices = indices.as_primitive::&lt;<span class="macro-nonterminal">$t</span>&gt;();
             <span class="kw">if </span><span class="macro-nonterminal">$options</span>.check_bounds {
@@ -2198,7 +2202,7 @@
             take_impl(<span class="macro-nonterminal">$values</span>, <span class="kw-2">&amp;</span>indices)
         }};
     }
-    <span class="macro">downcast_integer! </span>{
+    <span class="macro">downcast_integer!</span> {
         indices.data_type() =&gt; (helper, values, indices, options),
         d =&gt; <span class="prelude-val">Err</span>(ArrowError::InvalidArgumentError(<span class="macro">format!</span>(<span class="string">"Take only supported for integers, got {d:?}"</span>)))
     }
@@ -2241,7 +2245,7 @@
     values: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Array,
     indices: <span class="kw-2">&amp;</span>PrimitiveArray&lt;IndexType&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;ArrayRef, ArrowError&gt; {
-    <span class="macro">downcast_primitive_array! </span>{
+    <span class="macro">downcast_primitive_array!</span> {
         values =&gt; <span class="prelude-val">Ok</span>(Arc::new(take_primitive(values, indices)<span class="question-mark">?</span>)),
         DataType::Boolean =&gt; {
             <span class="kw">let </span>values = values.as_any().downcast_ref::&lt;BooleanArray&gt;().unwrap();
@@ -2300,11 +2304,11 @@
 
             <span class="prelude-val">Ok</span>(Arc::new(StructArray::from((fields, is_valid))) <span class="kw">as </span>ArrayRef)
         }
-        DataType::Dictionary(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">downcast_dictionary_array! </span>{
+        DataType::Dictionary(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">downcast_dictionary_array!</span> {
             values =&gt; <span class="prelude-val">Ok</span>(Arc::new(take_dict(values, indices)<span class="question-mark">?</span>)),
             t =&gt; <span class="macro">unimplemented!</span>(<span class="string">"Take not supported for dictionary type {:?}"</span>, t)
         }
-        DataType::RunEndEncoded(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">downcast_run_array! </span>{
+        DataType::RunEndEncoded(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">downcast_run_array!</span> {
             values =&gt; <span class="prelude-val">Ok</span>(Arc::new(take_run(values, indices)<span class="question-mark">?</span>)),
             t =&gt; <span class="macro">unimplemented!</span>(<span class="string">"Take not supported for run type {:?}"</span>, t)
         }
@@ -2530,7 +2534,11 @@
         nulls = <span class="prelude-val">Some</span>(null_buf.into())
     }
 
-    T::Offset::from_usize(values.len()).expect(<span class="string">"offset overflow"</span>);
+    T::Offset::from_usize(values.len()).ok_or(ArrowError::ComputeError(<span class="macro">format!</span>(
+        <span class="string">"Offset overflow for {}BinaryArray: {}"</span>,
+        T::Offset::PREFIX,
+        values.len()
+    )))<span class="question-mark">?</span>;
 
     <span class="kw">let </span>array_data = ArrayData::builder(T::DATA_TYPE)
         .len(data_len)
@@ -2829,7 +2837,7 @@
     <span class="kw">fn </span>to_indices(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; PrimitiveArray&lt;<span class="self">Self</span>::T&gt;;
 }
 
-<span class="macro">macro_rules! </span>to_indices_reinterpret {
+<span class="macro">macro_rules!</span> to_indices_reinterpret {
     (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$o</span>:ty) =&gt; {
         <span class="kw">impl </span>ToIndices <span class="kw">for </span>PrimitiveArray&lt;<span class="macro-nonterminal">$t</span>&gt; {
             <span class="kw">type </span>T = <span class="macro-nonterminal">$o</span>;
@@ -2842,7 +2850,7 @@
     };
 }
 
-<span class="macro">macro_rules! </span>to_indices_identity {
+<span class="macro">macro_rules!</span> to_indices_identity {
     (<span class="macro-nonterminal">$t</span>:ty) =&gt; {
         <span class="kw">impl </span>ToIndices <span class="kw">for </span>PrimitiveArray&lt;<span class="macro-nonterminal">$t</span>&gt; {
             <span class="kw">type </span>T = <span class="macro-nonterminal">$t</span>;
@@ -2854,7 +2862,7 @@
     };
 }
 
-<span class="macro">macro_rules! </span>to_indices_widening {
+<span class="macro">macro_rules!</span> to_indices_widening {
     (<span class="macro-nonterminal">$t</span>:ty, <span class="macro-nonterminal">$o</span>:ty) =&gt; {
         <span class="kw">impl </span>ToIndices <span class="kw">for </span>PrimitiveArray&lt;<span class="macro-nonterminal">$t</span>&gt; {
             <span class="kw">type </span>T = UInt32Type;
@@ -3530,7 +3538,7 @@
         <span class="macro">assert_eq!</span>(result.as_ref(), <span class="kw-2">&amp;</span>expected);
     }
 
-    <span class="macro">macro_rules! </span>test_take_list {
+    <span class="macro">macro_rules!</span> test_take_list {
         (<span class="macro-nonterminal">$offset_type</span>:ty, <span class="macro-nonterminal">$list_data_type</span>:ident, <span class="macro-nonterminal">$list_array_type</span>:ident) =&gt; {{
             <span class="comment">// Construct a value array, [[0,0,0], [-1,-2,-1], [], [2,3]]
             </span><span class="kw">let </span>value_data = Int32Array::from(<span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>, -<span class="number">2</span>, -<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]).into_data();
@@ -3585,7 +3593,7 @@
         }};
     }
 
-    <span class="macro">macro_rules! </span>test_take_list_with_value_nulls {
+    <span class="macro">macro_rules!</span> test_take_list_with_value_nulls {
         (<span class="macro-nonterminal">$offset_type</span>:ty, <span class="macro-nonterminal">$list_data_type</span>:ident, <span class="macro-nonterminal">$list_array_type</span>:ident) =&gt; {{
             <span class="comment">// Construct a value array, [[0,null,0], [-1,-2,3], [null], [5,null]]
             </span><span class="kw">let </span>value_data = Int32Array::from(<span class="macro">vec!</span>[
@@ -3653,7 +3661,7 @@
         }};
     }
 
-    <span class="macro">macro_rules! </span>test_take_list_with_nulls {
+    <span class="macro">macro_rules!</span> test_take_list_with_nulls {
         (<span class="macro-nonterminal">$offset_type</span>:ty, <span class="macro-nonterminal">$list_data_type</span>:ident, <span class="macro-nonterminal">$list_array_type</span>:ident) =&gt; {{
             <span class="comment">// Construct a value array, [[0,null,0], [-1,-2,3], null, [5,null]]
             </span><span class="kw">let </span>value_data = Int32Array::from(<span class="macro">vec!</span>[

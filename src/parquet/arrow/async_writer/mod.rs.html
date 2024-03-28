@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parquet/src/arrow/async_writer/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="parquet" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parquet/src/arrow/async_writer/mod.rs`."><title>mod.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="parquet" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../parquet/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -391,34 +391,6 @@
 <a href="#389" id="389">389</a>
 <a href="#390" id="390">390</a>
 <a href="#391" id="391">391</a>
-<a href="#392" id="392">392</a>
-<a href="#393" id="393">393</a>
-<a href="#394" id="394">394</a>
-<a href="#395" id="395">395</a>
-<a href="#396" id="396">396</a>
-<a href="#397" id="397">397</a>
-<a href="#398" id="398">398</a>
-<a href="#399" id="399">399</a>
-<a href="#400" id="400">400</a>
-<a href="#401" id="401">401</a>
-<a href="#402" id="402">402</a>
-<a href="#403" id="403">403</a>
-<a href="#404" id="404">404</a>
-<a href="#405" id="405">405</a>
-<a href="#406" id="406">406</a>
-<a href="#407" id="407">407</a>
-<a href="#408" id="408">408</a>
-<a href="#409" id="409">409</a>
-<a href="#410" id="410">410</a>
-<a href="#411" id="411">411</a>
-<a href="#412" id="412">412</a>
-<a href="#413" id="413">413</a>
-<a href="#414" id="414">414</a>
-<a href="#415" id="415">415</a>
-<a href="#416" id="416">416</a>
-<a href="#417" id="417">417</a>
-<a href="#418" id="418">418</a>
-<a href="#419" id="419">419</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -447,17 +419,16 @@
 //! # #[tokio::main(flavor="current_thread")]
 //! # async fn main() {
 //! #
-//! use std::sync::Arc;
-//! use arrow_array::{ArrayRef, Int64Array, RecordBatch, RecordBatchReader};
-//! use bytes::Bytes;
-//! use parquet::arrow::{AsyncArrowWriter, arrow_reader::ParquetRecordBatchReaderBuilder};
-//!
+//! # use std::sync::Arc;
+//! # use arrow_array::{ArrayRef, Int64Array, RecordBatch, RecordBatchReader};
+//! # use bytes::Bytes;
+//! # use parquet::arrow::{AsyncArrowWriter, arrow_reader::ParquetRecordBatchReaderBuilder};
+//! #
 //! let col = Arc::new(Int64Array::from_iter_values([1, 2, 3])) as ArrayRef;
 //! let to_write = RecordBatch::try_from_iter([("col", col)]).unwrap();
 //!
 //! let mut buffer = Vec::new();
-//! let mut writer =
-//!     AsyncArrowWriter::try_new(&amp;mut buffer, to_write.schema(), 0, None).unwrap();
+//! let mut writer = AsyncArrowWriter::try_new(&amp;mut buffer, to_write.schema(), None).unwrap();
 //! writer.write(&amp;to_write).await.unwrap();
 //! writer.close().await.unwrap();
 //!
@@ -472,83 +443,96 @@
 //! # }
 //! ```
 
-</span><span class="kw">use </span>std::{io::Write, sync::Arc};
-
-<span class="kw">use crate</span>::{
+</span><span class="kw">use crate</span>::{
     arrow::arrow_writer::ArrowWriterOptions,
     arrow::ArrowWriter,
     errors::{ParquetError, <span class="prelude-ty">Result</span>},
-    file::properties::WriterProperties,
+    file::{metadata::RowGroupMetaDataPtr, properties::WriterProperties},
     format::{FileMetaData, KeyValue},
 };
 <span class="kw">use </span>arrow_array::RecordBatch;
 <span class="kw">use </span>arrow_schema::SchemaRef;
 <span class="kw">use </span>tokio::io::{AsyncWrite, AsyncWriteExt};
 
-<span class="doccomment">/// Async arrow writer.
+<span class="doccomment">/// Encodes [`RecordBatch`] to parquet, outputting to an [`AsyncWrite`]
 ///
-/// It is implemented based on the sync writer [`ArrowWriter`] with an inner buffer.
-/// The buffered data will be flushed to the writer provided by caller when the
-/// buffer's threshold is exceeded.
+/// ## Memory Usage
+///
+/// This writer eagerly writes data as soon as possible to the underlying [`AsyncWrite`],
+/// permitting fine-grained control over buffering and I/O scheduling. However, the columnar
+/// nature of parquet forces data for an entire row group to be buffered in memory, before
+/// it can be flushed. Depending on the data and the configured row group size, this buffering
+/// may be substantial.
+///
+/// Memory usage can be limited by calling [`Self::flush`] to flush the in progress row group,
+/// although this will likely increase overall file size and reduce query performance.
+/// See [ArrowWriter] for more information.
+///
+/// ```no_run
+/// # use tokio::fs::File;
+/// # use arrow_array::RecordBatch;
+/// # use parquet::arrow::AsyncArrowWriter;
+/// # async fn test() {
+/// let mut writer: AsyncArrowWriter&lt;File&gt; = todo!();
+/// let batch: RecordBatch = todo!();
+/// writer.write(&amp;batch).await.unwrap();
+/// // Trigger an early flush if buffered size exceeds 1_000_000
+/// if writer.in_progress_size() &gt; 1_000_000 {
+///     writer.flush().await.unwrap()
+/// }
+/// # }
+/// ```
 </span><span class="kw">pub struct </span>AsyncArrowWriter&lt;W&gt; {
     <span class="doccomment">/// Underlying sync writer
-    </span>sync_writer: ArrowWriter&lt;SharedBuffer&gt;,
+    </span>sync_writer: ArrowWriter&lt;Vec&lt;u8&gt;&gt;,
 
     <span class="doccomment">/// Async writer provided by caller
     </span>async_writer: W,
-
-    <span class="doccomment">/// The inner buffer shared by the `sync_writer` and the `async_writer`
-    </span>shared_buffer: SharedBuffer,
-
-    <span class="doccomment">/// Trigger forced flushing once buffer size reaches this value
-    </span>buffer_size: usize,
 }
 
 <span class="kw">impl</span>&lt;W: AsyncWrite + Unpin + Send&gt; AsyncArrowWriter&lt;W&gt; {
-    <span class="doccomment">/// Try to create a new Async Arrow Writer.
-    ///
-    /// `buffer_size` determines the number of bytes to buffer before flushing
-    /// to the underlying [`AsyncWrite`]
-    ///
-    /// The intermediate buffer will automatically be resized if necessary
-    ///
-    /// [`Self::write`] will flush this intermediate buffer if it is at least
-    /// half full
+    <span class="doccomment">/// Try to create a new Async Arrow Writer
     </span><span class="kw">pub fn </span>try_new(
         writer: W,
         arrow_schema: SchemaRef,
-        buffer_size: usize,
         props: <span class="prelude-ty">Option</span>&lt;WriterProperties&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>options = ArrowWriterOptions::new().with_properties(props.unwrap_or_default());
-        <span class="self">Self</span>::try_new_with_options(writer, arrow_schema, buffer_size, options)
+        <span class="self">Self</span>::try_new_with_options(writer, arrow_schema, options)
     }
 
-    <span class="doccomment">/// Try to create a new Async Arrow Writer with [`ArrowWriterOptions`].
-    ///
-    /// `buffer_size` determines the number of bytes to buffer before flushing
-    /// to the underlying [`AsyncWrite`]
-    ///
-    /// The intermediate buffer will automatically be resized if necessary
-    ///
-    /// [`Self::write`] will flush this intermediate buffer if it is at least
-    /// half full
+    <span class="doccomment">/// Try to create a new Async Arrow Writer with [`ArrowWriterOptions`]
     </span><span class="kw">pub fn </span>try_new_with_options(
         writer: W,
         arrow_schema: SchemaRef,
-        buffer_size: usize,
         options: ArrowWriterOptions,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>shared_buffer = SharedBuffer::new(buffer_size);
-        <span class="kw">let </span>sync_writer =
-            ArrowWriter::try_new_with_options(shared_buffer.clone(), arrow_schema, options)<span class="question-mark">?</span>;
+        <span class="kw">let </span>sync_writer = ArrowWriter::try_new_with_options(Vec::new(), arrow_schema, options)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             sync_writer,
             async_writer: writer,
-            shared_buffer,
-            buffer_size,
         })
+    }
+
+    <span class="doccomment">/// Returns metadata for any flushed row groups
+    </span><span class="kw">pub fn </span>flushed_row_groups(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[RowGroupMetaDataPtr] {
+        <span class="self">self</span>.sync_writer.flushed_row_groups()
+    }
+
+    <span class="doccomment">/// Returns the estimated length in bytes of the current in progress row group
+    </span><span class="kw">pub fn </span>in_progress_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.sync_writer.in_progress_size()
+    }
+
+    <span class="doccomment">/// Returns the number of rows buffered in the in progress row group
+    </span><span class="kw">pub fn </span>in_progress_rows(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.sync_writer.in_progress_rows()
+    }
+
+    <span class="doccomment">/// Returns the number of bytes written by this instance
+    </span><span class="kw">pub fn </span>bytes_written(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.sync_writer.bytes_written()
     }
 
     <span class="doccomment">/// Enqueues the provided `RecordBatch` to be written
@@ -556,14 +540,21 @@
     /// After every sync write by the inner [ArrowWriter], the inner buffer will be
     /// checked and flush if at least half full
     </span><span class="kw">pub async fn </span>write(<span class="kw-2">&amp;mut </span><span class="self">self</span>, batch: <span class="kw-2">&amp;</span>RecordBatch) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span>before = <span class="self">self</span>.sync_writer.flushed_row_groups().len();
         <span class="self">self</span>.sync_writer.write(batch)<span class="question-mark">?</span>;
-        <span class="self">Self</span>::try_flush(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.shared_buffer,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.async_writer,
-            <span class="self">self</span>.buffer_size,
-        )
-        .<span class="kw">await
-    </span>}
+        <span class="kw">if </span>before != <span class="self">self</span>.sync_writer.flushed_row_groups().len() {
+            <span class="self">self</span>.do_write().<span class="kw">await</span><span class="question-mark">?</span>;
+        }
+        <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="doccomment">/// Flushes all buffered rows into a new row group
+    </span><span class="kw">pub async fn </span>flush(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="self">self</span>.sync_writer.flush()<span class="question-mark">?</span>;
+        <span class="self">self</span>.do_write().<span class="kw">await</span><span class="question-mark">?</span>;
+
+        <span class="prelude-val">Ok</span>(())
+    }
 
     <span class="doccomment">/// Append [`KeyValue`] metadata in addition to those in [`WriterProperties`]
     ///
@@ -576,34 +567,25 @@
     ///
     /// All the data in the inner buffer will be force flushed.
     </span><span class="kw">pub async fn </span>close(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;FileMetaData&gt; {
-        <span class="kw">let </span>metadata = <span class="self">self</span>.sync_writer.close()<span class="question-mark">?</span>;
+        <span class="kw">let </span>metadata = <span class="self">self</span>.sync_writer.finish()<span class="question-mark">?</span>;
 
         <span class="comment">// Force to flush the remaining data.
-        </span><span class="self">Self</span>::try_flush(<span class="kw-2">&amp;mut </span><span class="self">self</span>.shared_buffer, <span class="kw-2">&amp;mut </span><span class="self">self</span>.async_writer, <span class="number">0</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        </span><span class="self">self</span>.do_write().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="self">self</span>.async_writer.shutdown().<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(metadata)
     }
 
-    <span class="doccomment">/// Flush the data in the [`SharedBuffer`] into the `async_writer` if its size
-    /// exceeds the threshold.
-    </span><span class="kw">async fn </span>try_flush(
-        shared_buffer: <span class="kw-2">&amp;mut </span>SharedBuffer,
-        async_writer: <span class="kw-2">&amp;mut </span>W,
-        buffer_size: usize,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer = shared_buffer.buffer.try_lock().unwrap();
-        <span class="kw">if </span>buffer.is_empty() || buffer.len() &lt; buffer_size {
-            <span class="comment">// no need to flush
-            </span><span class="kw">return </span><span class="prelude-val">Ok</span>(());
-        }
+    <span class="doccomment">/// Flush the data written by `sync_writer` into the `async_writer`
+    </span><span class="kw">async fn </span>do_write(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span>buffer = <span class="self">self</span>.sync_writer.inner_mut();
 
-        async_writer
+        <span class="self">self</span>.async_writer
             .write_all(buffer.as_slice())
             .<span class="kw">await
             </span>.map_err(|e| ParquetError::External(Box::new(e)))<span class="question-mark">?</span>;
 
-        async_writer
+        <span class="self">self</span>.async_writer
             .flush()
             .<span class="kw">await
             </span>.map_err(|e| ParquetError::External(Box::new(e)))<span class="question-mark">?</span>;
@@ -615,41 +597,12 @@
     }
 }
 
-<span class="doccomment">/// A buffer with interior mutability shared by the [`ArrowWriter`] and
-/// [`AsyncArrowWriter`].
-</span><span class="attr">#[derive(Clone)]
-</span><span class="kw">struct </span>SharedBuffer {
-    <span class="doccomment">/// The inner buffer for reading and writing
-    ///
-    /// The lock is used to obtain internal mutability, so no worry about the
-    /// lock contention.
-    </span>buffer: Arc&lt;futures::lock::Mutex&lt;Vec&lt;u8&gt;&gt;&gt;,
-}
-
-<span class="kw">impl </span>SharedBuffer {
-    <span class="kw">pub fn </span>new(capacity: usize) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            buffer: Arc::new(futures::lock::Mutex::new(Vec::with_capacity(capacity))),
-        }
-    }
-}
-
-<span class="kw">impl </span>Write <span class="kw">for </span>SharedBuffer {
-    <span class="kw">fn </span>write(<span class="kw-2">&amp;mut </span><span class="self">self</span>, buf: <span class="kw-2">&amp;</span>[u8]) -&gt; std::io::Result&lt;usize&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer = <span class="self">self</span>.buffer.try_lock().unwrap();
-        Write::write(<span class="kw-2">&amp;mut *</span>buffer, buf)
-    }
-
-    <span class="kw">fn </span>flush(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; std::io::Result&lt;()&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer = <span class="self">self</span>.buffer.try_lock().unwrap();
-        Write::flush(<span class="kw-2">&amp;mut *</span>buffer)
-    }
-}
-
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>arrow_array::{ArrayRef, BinaryArray, Int64Array, RecordBatchReader};
+    <span class="kw">use </span>arrow::datatypes::{DataType, Field, Schema};
+    <span class="kw">use </span>arrow_array::{ArrayRef, BinaryArray, Int32Array, Int64Array, RecordBatchReader};
     <span class="kw">use </span>bytes::Bytes;
+    <span class="kw">use </span>std::sync::Arc;
     <span class="kw">use </span>tokio::pin;
 
     <span class="kw">use </span><span class="kw">crate</span>::arrow::arrow_reader::{ParquetRecordBatchReader, ParquetRecordBatchReaderBuilder};
@@ -673,8 +626,7 @@
         <span class="kw">let </span>to_write = RecordBatch::try_from_iter([(<span class="string">"col"</span>, col)]).unwrap();
 
         <span class="kw">let </span><span class="kw-2">mut </span>buffer = Vec::new();
-        <span class="kw">let </span><span class="kw-2">mut </span>writer =
-            AsyncArrowWriter::try_new(<span class="kw-2">&amp;mut </span>buffer, to_write.schema(), <span class="number">0</span>, <span class="prelude-val">None</span>).unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>writer = AsyncArrowWriter::try_new(<span class="kw-2">&amp;mut </span>buffer, to_write.schema(), <span class="prelude-val">None</span>).unwrap();
         writer.write(<span class="kw-2">&amp;</span>to_write).<span class="kw">await</span>.unwrap();
         writer.close().<span class="kw">await</span>.unwrap();
 
@@ -702,7 +654,6 @@
         <span class="kw">let </span><span class="kw-2">mut </span>async_writer = AsyncArrowWriter::try_new(
             <span class="kw-2">&amp;mut </span>async_buffer,
             reader.schema(),
-            <span class="number">1024</span>,
             <span class="prelude-val">Some</span>(write_props.clone()),
         )
         .unwrap();
@@ -765,54 +716,6 @@
     }
 
     <span class="attr">#[tokio::test]
-    </span><span class="kw">async fn </span>test_async_writer_with_buffer_flush_threshold() {
-        <span class="kw">let </span>write_props = WriterProperties::builder()
-            .set_max_row_group_size(<span class="number">2048</span>)
-            .build();
-        <span class="kw">let </span>expect_encode_size = {
-            <span class="kw">let </span>reader = get_test_reader();
-            <span class="kw">let </span><span class="kw-2">mut </span>buffer = Vec::new();
-            <span class="kw">let </span><span class="kw-2">mut </span>async_writer = AsyncArrowWriter::try_new(
-                <span class="kw-2">&amp;mut </span>buffer,
-                reader.schema(),
-                <span class="number">0</span>,
-                <span class="prelude-val">Some</span>(write_props.clone()),
-            )
-            .unwrap();
-            <span class="kw">for </span>record_batch <span class="kw">in </span>reader {
-                <span class="kw">let </span>record_batch = record_batch.unwrap();
-                async_writer.write(<span class="kw-2">&amp;</span>record_batch).<span class="kw">await</span>.unwrap();
-            }
-            async_writer.close().<span class="kw">await</span>.unwrap();
-            buffer.len()
-        };
-
-        <span class="kw">let </span>test_buffer_flush_thresholds = <span class="macro">vec!</span>[<span class="number">0</span>, <span class="number">1024</span>, <span class="number">40 </span>* <span class="number">1024</span>, <span class="number">50 </span>* <span class="number">1024</span>, <span class="number">100 </span>* <span class="number">1024</span>];
-
-        <span class="kw">for </span>buffer_flush_threshold <span class="kw">in </span>test_buffer_flush_thresholds {
-            <span class="kw">let </span>reader = get_test_reader();
-            <span class="kw">let </span><span class="kw-2">mut </span>test_async_sink = TestAsyncSink {
-                sink: Vec::new(),
-                min_accept_bytes: buffer_flush_threshold,
-                expect_total_bytes: expect_encode_size,
-            };
-            <span class="kw">let </span><span class="kw-2">mut </span>async_writer = AsyncArrowWriter::try_new(
-                <span class="kw-2">&amp;mut </span>test_async_sink,
-                reader.schema(),
-                buffer_flush_threshold * <span class="number">2</span>,
-                <span class="prelude-val">Some</span>(write_props.clone()),
-            )
-            .unwrap();
-
-            <span class="kw">for </span>record_batch <span class="kw">in </span>reader {
-                <span class="kw">let </span>record_batch = record_batch.unwrap();
-                async_writer.write(<span class="kw-2">&amp;</span>record_batch).<span class="kw">await</span>.unwrap();
-            }
-            async_writer.close().<span class="kw">await</span>.unwrap();
-        }
-    }
-
-    <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_async_writer_file() {
         <span class="kw">let </span>col = Arc::new(Int64Array::from_iter_values([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])) <span class="kw">as </span>ArrayRef;
         <span class="kw">let </span>col2 = Arc::new(BinaryArray::from_iter_values(<span class="macro">vec!</span>[
@@ -825,7 +728,7 @@
         <span class="kw">let </span>temp = tempfile::tempfile().unwrap();
 
         <span class="kw">let </span>file = tokio::fs::File::from_std(temp.try_clone().unwrap());
-        <span class="kw">let </span><span class="kw-2">mut </span>writer = AsyncArrowWriter::try_new(file, to_write.schema(), <span class="number">0</span>, <span class="prelude-val">None</span>).unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>writer = AsyncArrowWriter::try_new(file, to_write.schema(), <span class="prelude-val">None</span>).unwrap();
         writer.write(<span class="kw-2">&amp;</span>to_write).<span class="kw">await</span>.unwrap();
         writer.close().<span class="kw">await</span>.unwrap();
 
@@ -836,6 +739,47 @@
         <span class="kw">let </span>read = reader.next().unwrap().unwrap();
 
         <span class="macro">assert_eq!</span>(to_write, read);
+    }
+
+    <span class="attr">#[tokio::test]
+    </span><span class="kw">async fn </span>in_progress_accounting() {
+        <span class="comment">// define schema
+        </span><span class="kw">let </span>schema = Schema::new(<span class="macro">vec!</span>[Field::new(<span class="string">"a"</span>, DataType::Int32, <span class="bool-val">false</span>)]);
+
+        <span class="comment">// create some data
+        </span><span class="kw">let </span>a = Int32Array::from_value(<span class="number">0_i32</span>, <span class="number">512</span>);
+
+        <span class="comment">// build a record batch
+        </span><span class="kw">let </span>batch = RecordBatch::try_new(Arc::new(schema), <span class="macro">vec!</span>[Arc::new(a)]).unwrap();
+
+        <span class="kw">let </span>temp = tempfile::tempfile().unwrap();
+        <span class="kw">let </span>file = tokio::fs::File::from_std(temp.try_clone().unwrap());
+        <span class="kw">let </span><span class="kw-2">mut </span>writer = AsyncArrowWriter::try_new(file, batch.schema(), <span class="prelude-val">None</span>).unwrap();
+
+        <span class="comment">// starts empty
+        </span><span class="macro">assert_eq!</span>(writer.in_progress_size(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(writer.in_progress_rows(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(writer.bytes_written(), <span class="number">4</span>); <span class="comment">// Initial Parquet header
+        </span>writer.write(<span class="kw-2">&amp;</span>batch).<span class="kw">await</span>.unwrap();
+
+        <span class="comment">// updated on write
+        </span><span class="kw">let </span>initial_size = writer.in_progress_size();
+        <span class="macro">assert!</span>(initial_size &gt; <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(writer.in_progress_rows(), batch.num_rows());
+
+        <span class="comment">// updated on second write
+        </span>writer.write(<span class="kw-2">&amp;</span>batch).<span class="kw">await</span>.unwrap();
+        <span class="macro">assert!</span>(writer.in_progress_size() &gt; initial_size);
+        <span class="macro">assert_eq!</span>(writer.in_progress_rows(), batch.num_rows() * <span class="number">2</span>);
+
+        <span class="comment">// in progress tracking is cleared, but the overall data written is updated
+        </span><span class="kw">let </span>pre_flush_bytes_written = writer.bytes_written();
+        writer.flush().<span class="kw">await</span>.unwrap();
+        <span class="macro">assert_eq!</span>(writer.in_progress_size(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(writer.in_progress_rows(), <span class="number">0</span>);
+        <span class="macro">assert!</span>(writer.bytes_written() &gt; pre_flush_bytes_written);
+
+        writer.close().<span class="kw">await</span>.unwrap();
     }
 }
 </code></pre></div></section></main></body></html>

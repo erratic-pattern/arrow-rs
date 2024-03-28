@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-array/src/builder/struct_builder.rs`."><title>struct_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_array" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-array/src/builder/struct_builder.rs`."><title>struct_builder.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_array" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../arrow_array/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -632,6 +632,99 @@
 <a href="#630" id="630">630</a>
 <a href="#631" id="631">631</a>
 <a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
+<a href="#639" id="639">639</a>
+<a href="#640" id="640">640</a>
+<a href="#641" id="641">641</a>
+<a href="#642" id="642">642</a>
+<a href="#643" id="643">643</a>
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
+<a href="#660" id="660">660</a>
+<a href="#661" id="661">661</a>
+<a href="#662" id="662">662</a>
+<a href="#663" id="663">663</a>
+<a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -650,16 +743,90 @@
 // under the License.
 
 </span><span class="kw">use </span><span class="kw">crate</span>::builder::<span class="kw-2">*</span>;
-<span class="kw">use crate</span>::{ArrayRef, StructArray};
+<span class="kw">use </span><span class="kw">crate</span>::StructArray;
 <span class="kw">use </span>arrow_buffer::NullBufferBuilder;
-<span class="kw">use </span>arrow_schema::{DataType, Fields, IntervalUnit, TimeUnit};
-<span class="kw">use </span>std::any::Any;
+<span class="kw">use </span>arrow_schema::{DataType, Fields, IntervalUnit, SchemaBuilder, TimeUnit};
 <span class="kw">use </span>std::sync::Arc;
 
 <span class="doccomment">/// Builder for [`StructArray`]
 ///
 /// Note that callers should make sure that methods of all the child field builders are
 /// properly called to maintain the consistency of the data structure.
+///
+///
+/// Handling arrays with complex layouts, such as `List&lt;Struct&lt;List&lt;Struct&gt;&gt;&gt;`, in Rust can be challenging due to its strong typing system.
+/// To construct a collection builder ([`ListBuilder`], [`LargeListBuilder`], or [`MapBuilder`]) using [`make_builder`], multiple calls are required. This complexity arises from the recursive approach utilized by [`StructBuilder::from_fields`].
+///
+/// Initially, [`StructBuilder::from_fields`] invokes [`make_builder`], which returns a `Box&lt;dyn ArrayBuilder&gt;`. To obtain the specific collection builder, one must first use [`StructBuilder::field_builder`] to get a `Collection&lt;[Box&lt;dyn ArrayBuilder&gt;]&gt;`. Subsequently, the `values()` result from this operation can be downcast to the desired builder type.
+///
+/// For example, when working with [`ListBuilder`], you would first call [`StructBuilder::field_builder::&lt;ListBuilder&lt;Box&lt;dyn ArrayBuilder&gt;&gt;&gt;`] and then downcast the [`Box&lt;dyn ArrayBuilder&gt;`] to the specific [`StructBuilder`] you need.
+///
+/// For a practical example see the code below:
+///
+/// ```rust
+///    use arrow_array::builder::{ArrayBuilder, ListBuilder, StringBuilder, StructBuilder};
+///    use arrow_schema::{DataType, Field, Fields};
+///    use std::sync::Arc;
+///
+///    // This is an example column that has a List&lt;Struct&lt;List&lt;Struct&gt;&gt;&gt; layout
+///    let mut example_col = ListBuilder::new(StructBuilder::from_fields(
+///        vec![Field::new(
+///            "value_list",
+///            DataType::List(Arc::new(Field::new(
+///                "item",
+///                DataType::Struct(Fields::from(vec![
+///                    Field::new("key", DataType::Utf8, true),
+///                    Field::new("value", DataType::Utf8, true),
+///                ])), //In this example we are trying to get to this builder and insert key/value pairs
+///                true,
+///            ))),
+///            true,
+///        )],
+///        0,
+///    ));
+///
+///   // We can obtain the StructBuilder without issues, because example_col was created with StructBuilder
+///   let col_struct_builder: &amp;mut StructBuilder = example_col.values();
+///
+///   // We can't obtain the ListBuilder&lt;StructBuilder&gt; with the expected generic types, because under the hood
+///   // the StructBuilder was returned as a Box&lt;dyn ArrayBuilder&gt; and passed as such to the ListBuilder constructor
+///   
+///   // This panics in runtime, even though we know that the builder is a ListBuilder&lt;StructBuilder&gt;.
+///   // let sb = col_struct_builder
+///   //     .field_builder::&lt;ListBuilder&lt;StructBuilder&gt;&gt;(0)
+///   //     .as_mut()
+///   //     .unwrap();
+///
+///   //To keep in line with Rust's strong typing, we fetch a ListBuilder&lt;Box&lt;dyn ArrayBuilder&gt;&gt; from the column StructBuilder first...
+///   let mut list_builder_option =
+///       col_struct_builder.field_builder::&lt;ListBuilder&lt;Box&lt;dyn ArrayBuilder&gt;&gt;&gt;(0);
+///
+///   let list_builder = list_builder_option.as_mut().unwrap();
+///
+///   // ... and then downcast the key/value pair values to a StructBuilder
+///   let struct_builder = list_builder
+///       .values()
+///       .as_any_mut()
+///       .downcast_mut::&lt;StructBuilder&gt;()
+///       .unwrap();
+///
+///   // We can now append values to the StructBuilder
+///   let key_builder = struct_builder.field_builder::&lt;StringBuilder&gt;(0).unwrap();
+///   key_builder.append_value("my key");
+///
+///   let value_builder = struct_builder.field_builder::&lt;StringBuilder&gt;(1).unwrap();
+///   value_builder.append_value("my value");
+///
+///   struct_builder.append(true);
+///   list_builder.append(true);
+///   col_struct_builder.append(true);
+///   example_col.append(true);
+///
+///   let array = example_col.finish();
+///
+///   println!("My array: {:?}", array);
+/// ```
+///
 </span><span class="kw">pub struct </span>StructBuilder {
     fields: Fields,
     field_builders: Vec&lt;Box&lt;<span class="kw">dyn </span>ArrayBuilder&gt;&gt;,
@@ -723,6 +890,8 @@
 <span class="doccomment">/// Returns a builder with capacity `capacity` that corresponds to the datatype `DataType`
 /// This function is useful to construct arrays from an arbitrary vectors with known/expected
 /// schema.
+///
+/// See comments on StructBuilder on how to retreive collection builders built by make_builder.
 </span><span class="kw">pub fn </span>make_builder(datatype: <span class="kw-2">&amp;</span>DataType, capacity: usize) -&gt; Box&lt;<span class="kw">dyn </span>ArrayBuilder&gt; {
     <span class="kw">use </span><span class="kw">crate</span>::builder::<span class="kw-2">*</span>;
     <span class="kw">match </span>datatype {
@@ -805,11 +974,11 @@
         }
         DataType::List(field) =&gt; {
             <span class="kw">let </span>builder = make_builder(field.data_type(), capacity);
-            Box::new(ListBuilder::with_capacity(builder, capacity))
+            Box::new(ListBuilder::with_capacity(builder, capacity).with_field(field.clone()))
         }
         DataType::LargeList(field) =&gt; {
             <span class="kw">let </span>builder = make_builder(field.data_type(), capacity);
-            Box::new(LargeListBuilder::with_capacity(builder, capacity))
+            Box::new(LargeListBuilder::with_capacity(builder, capacity).with_field(field.clone()))
         }
         DataType::Map(field, <span class="kw">_</span>) =&gt; <span class="kw">match </span>field.data_type() {
             DataType::Struct(fields) =&gt; {
@@ -820,12 +989,15 @@
                 };
                 <span class="kw">let </span>key_builder = make_builder(fields[<span class="number">0</span>].data_type(), capacity);
                 <span class="kw">let </span>value_builder = make_builder(fields[<span class="number">1</span>].data_type(), capacity);
-                Box::new(MapBuilder::with_capacity(
-                    <span class="prelude-val">Some</span>(map_field_names),
-                    key_builder,
-                    value_builder,
-                    capacity,
-                ))
+                Box::new(
+                    MapBuilder::with_capacity(
+                        <span class="prelude-val">Some</span>(map_field_names),
+                        key_builder,
+                        value_builder,
+                        capacity,
+                    )
+                    .with_values_field(fields[<span class="number">1</span>].clone()),
+                )
             }
             t =&gt; <span class="macro">panic!</span>(<span class="string">"The field of Map data type {t:?} should has a child Struct field"</span>),
         },
@@ -920,9 +1092,21 @@
         <span class="kw">if </span><span class="self">self</span>.fields.len() != <span class="self">self</span>.field_builders.len() {
             <span class="macro">panic!</span>(<span class="string">"Number of fields is not equal to the number of field_builders."</span>);
         }
-        <span class="kw">if </span>!<span class="self">self</span>.field_builders.iter().all(|x| x.len() == <span class="self">self</span>.len()) {
-            <span class="macro">panic!</span>(<span class="string">"StructBuilder and field_builders are of unequal lengths."</span>);
-        }
+        <span class="self">self</span>.field_builders.iter().enumerate().for_each(|(idx, x)| {
+            <span class="kw">if </span>x.len() != <span class="self">self</span>.len() {
+                <span class="kw">let </span>builder = SchemaBuilder::from(<span class="kw-2">&amp;</span><span class="self">self</span>.fields);
+                <span class="kw">let </span>schema = builder.finish();
+
+                <span class="macro">panic!</span>(<span class="string">"{}"</span>, <span class="macro">format!</span>(
+                    <span class="string">"StructBuilder ({:?}) and field_builder with index {} ({:?}) are of unequal lengths: ({} != {})."</span>,
+                    schema,
+                    idx,
+                    <span class="self">self</span>.fields[idx].data_type(),
+                    <span class="self">self</span>.len(),
+                    x.len()
+                ));
+            }
+        });
     }
 }
 
@@ -1192,7 +1376,9 @@
     }
 
     <span class="attr">#[test]
-    #[should_panic(expected = <span class="string">"StructBuilder and field_builders are of unequal lengths."</span>)]
+    #[should_panic(
+        expected = <span class="string">"StructBuilder (Schema { fields: [Field { name: \"f1\", data_type: Int32, nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {} }, Field { name: \"f2\", data_type: Boolean, nullable: false, dict_id: 0, dict_is_ordered: false, metadata: {} }], metadata: {} }) and field_builder with index 1 (Boolean) are of unequal lengths: (2 != 1)."
+    </span>)]
     </span><span class="kw">fn </span>test_struct_array_builder_unequal_field_builders_lengths() {
         <span class="kw">let </span><span class="kw-2">mut </span>int_builder = Int32Builder::with_capacity(<span class="number">10</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>bool_builder = BooleanBuilder::new();

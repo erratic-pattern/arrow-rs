@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-array/src/array/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_array" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-array/src/array/mod.rs`."><title>mod.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_array" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../arrow_array/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1040,6 +1040,38 @@
 <a href="#1038" id="1038">1038</a>
 <a href="#1039" id="1039">1039</a>
 <a href="#1040" id="1040">1040</a>
+<a href="#1041" id="1041">1041</a>
+<a href="#1042" id="1042">1042</a>
+<a href="#1043" id="1043">1043</a>
+<a href="#1044" id="1044">1044</a>
+<a href="#1045" id="1045">1045</a>
+<a href="#1046" id="1046">1046</a>
+<a href="#1047" id="1047">1047</a>
+<a href="#1048" id="1048">1048</a>
+<a href="#1049" id="1049">1049</a>
+<a href="#1050" id="1050">1050</a>
+<a href="#1051" id="1051">1051</a>
+<a href="#1052" id="1052">1052</a>
+<a href="#1053" id="1053">1053</a>
+<a href="#1054" id="1054">1054</a>
+<a href="#1055" id="1055">1055</a>
+<a href="#1056" id="1056">1056</a>
+<a href="#1057" id="1057">1057</a>
+<a href="#1058" id="1058">1058</a>
+<a href="#1059" id="1059">1059</a>
+<a href="#1060" id="1060">1060</a>
+<a href="#1061" id="1061">1061</a>
+<a href="#1062" id="1062">1062</a>
+<a href="#1063" id="1063">1063</a>
+<a href="#1064" id="1064">1064</a>
+<a href="#1065" id="1065">1065</a>
+<a href="#1066" id="1066">1066</a>
+<a href="#1067" id="1067">1067</a>
+<a href="#1068" id="1068">1068</a>
+<a href="#1069" id="1069">1069</a>
+<a href="#1070" id="1070">1070</a>
+<a href="#1071" id="1071">1071</a>
+<a href="#1072" id="1072">1072</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -1107,7 +1139,12 @@
 <span class="kw">pub use </span>union_array::<span class="kw-2">*</span>;
 
 <span class="kw">mod </span>run_array;
+
 <span class="kw">pub use </span>run_array::<span class="kw-2">*</span>;
+
+<span class="kw">mod </span>byte_view_array;
+
+<span class="kw">pub use </span>byte_view_array::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// An array in the [arrow columnar format](https://arrow.apache.org/docs/format/Columnar.html)
 </span><span class="kw">pub trait </span>Array: std::fmt::Debug + Send + Sync {
@@ -1217,23 +1254,35 @@
 
     <span class="doccomment">/// Returns the null buffer of this array if any.
     ///
-    /// The null buffer encodes the "physical" nulls of an array.
-    /// However, some arrays can also encode nullability in their children, for example,
-    /// [`DictionaryArray::values`] values or [`RunArray::values`], or without a null buffer,
-    /// such as [`NullArray`]. To determine if each element of such an array is logically null,
-    /// you can use the slower [`Array::logical_nulls`] to obtain a computed mask .
+    /// The null buffer contains the "physical" nulls of an array, that is how
+    /// the nulls are represented in the underlying arrow format.
+    ///
+    /// The physical representation is efficient, but is sometimes non intuitive
+    /// for certain array types such as those with nullable child arrays like
+    /// [`DictionaryArray::values`] or [`RunArray::values`], or without a
+    /// null buffer, such as [`NullArray`].
+    ///
+    /// To determine if each element of such an array is "logically" null,
+    /// use the slower [`Array::logical_nulls`] to obtain a computed mask.
     </span><span class="kw">fn </span>nulls(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>NullBuffer&gt;;
 
-    <span class="doccomment">/// Returns a potentially computed [`NullBuffer`] that represent the logical null values of this array, if any.
+    <span class="doccomment">/// Returns a potentially computed [`NullBuffer`] that represents the logical
+    /// null values of this array, if any.
     ///
-    /// In most cases this will be the same as [`Array::nulls`], except for:
+    /// Logical nulls represent the values that are null in the array,
+    /// regardless of the underlying physical arrow representation.
+    ///
+    /// For most array types, this is equivalent to the "physical" nulls
+    /// returned by [`Array::nulls`]. It is different for the following cases, because which
+    /// elements are null is not encoded in a single null buffer:
     ///
     /// * [`DictionaryArray`] where [`DictionaryArray::values`] contains nulls
     /// * [`RunArray`] where [`RunArray::values`] contains nulls
     /// * [`NullArray`] where all indices are nulls
     ///
-    /// In these cases a logical [`NullBuffer`] will be computed, encoding the logical nullability
-    /// of these arrays, beyond what is encoded in [`Array::nulls`]
+    /// In these cases a logical [`NullBuffer`] will be computed, encoding the
+    /// logical nullability of these arrays, beyond what is encoded in
+    /// [`Array::nulls`]
     </span><span class="kw">fn </span>logical_nulls(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;NullBuffer&gt; {
         <span class="self">self</span>.nulls().cloned()
     }
@@ -1314,6 +1363,8 @@
 
     <span class="doccomment">/// Returns the total number of bytes of memory pointed to by this array.
     /// The buffers store bytes in the Arrow memory format, and include the data as well as the validity map.
+    /// Note that this does not always correspond to the exact memory usage of an array,
+    /// since multiple arrays can share the same buffers or slices thereof.
     </span><span class="kw">fn </span>get_buffer_memory_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize;
 
     <span class="doccomment">/// Returns the total number of bytes of memory occupied physically by this array.
@@ -1624,8 +1675,10 @@
         DataType::Binary =&gt; Arc::new(BinaryArray::from(data)) <span class="kw">as </span>ArrayRef,
         DataType::LargeBinary =&gt; Arc::new(LargeBinaryArray::from(data)) <span class="kw">as </span>ArrayRef,
         DataType::FixedSizeBinary(<span class="kw">_</span>) =&gt; Arc::new(FixedSizeBinaryArray::from(data)) <span class="kw">as </span>ArrayRef,
+        DataType::BinaryView =&gt; Arc::new(BinaryViewArray::from(data)) <span class="kw">as </span>ArrayRef,
         DataType::Utf8 =&gt; Arc::new(StringArray::from(data)) <span class="kw">as </span>ArrayRef,
         DataType::LargeUtf8 =&gt; Arc::new(LargeStringArray::from(data)) <span class="kw">as </span>ArrayRef,
+        DataType::Utf8View =&gt; Arc::new(StringViewArray::from(data)) <span class="kw">as </span>ArrayRef,
         DataType::List(<span class="kw">_</span>) =&gt; Arc::new(ListArray::from(data)) <span class="kw">as </span>ArrayRef,
         DataType::LargeList(<span class="kw">_</span>) =&gt; Arc::new(LargeListArray::from(data)) <span class="kw">as </span>ArrayRef,
         DataType::Struct(<span class="kw">_</span>) =&gt; Arc::new(StructArray::from(data)) <span class="kw">as </span>ArrayRef,
@@ -1920,7 +1973,7 @@
             <span class="kw">let </span>array = new_null_array(<span class="kw-2">&amp;</span>data_type, <span class="number">4</span>);
             <span class="kw">let </span>array = array.as_ref();
 
-            <span class="macro">downcast_run_array! </span>{
+            <span class="macro">downcast_run_array!</span> {
                 array =&gt; {
                     <span class="macro">assert_eq!</span>(array.len(), <span class="number">4</span>);
                     <span class="macro">assert_eq!</span>(array.null_count(), <span class="number">0</span>);
@@ -1974,6 +2027,17 @@
             arr.get_array_memory_size() - empty.get_array_memory_size(),
             <span class="number">128 </span>* std::mem::size_of::&lt;i64&gt;()
         );
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_memory_size_primitive_sliced() {
+        <span class="kw">let </span>arr = PrimitiveArray::&lt;Int64Type&gt;::from_iter_values(<span class="number">0</span>..<span class="number">128</span>);
+        <span class="kw">let </span>slice1 = arr.slice(<span class="number">0</span>, <span class="number">64</span>);
+        <span class="kw">let </span>slice2 = arr.slice(<span class="number">64</span>, <span class="number">64</span>);
+
+        <span class="comment">// both slices report the full buffer memory usage, even though the buffers are shared
+        </span><span class="macro">assert_eq!</span>(slice1.get_array_memory_size(), arr.get_array_memory_size());
+        <span class="macro">assert_eq!</span>(slice2.get_array_memory_size(), arr.get_array_memory_size());
     }
 
     <span class="attr">#[test]

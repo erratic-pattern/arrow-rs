@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-ipc/src/convert.rs`."><title>convert.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_ipc" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-ipc/src/convert.rs`."><title>convert.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_ipc" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../arrow_ipc/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1058,6 +1058,58 @@
 <a href="#1056" id="1056">1056</a>
 <a href="#1057" id="1057">1057</a>
 <a href="#1058" id="1058">1058</a>
+<a href="#1059" id="1059">1059</a>
+<a href="#1060" id="1060">1060</a>
+<a href="#1061" id="1061">1061</a>
+<a href="#1062" id="1062">1062</a>
+<a href="#1063" id="1063">1063</a>
+<a href="#1064" id="1064">1064</a>
+<a href="#1065" id="1065">1065</a>
+<a href="#1066" id="1066">1066</a>
+<a href="#1067" id="1067">1067</a>
+<a href="#1068" id="1068">1068</a>
+<a href="#1069" id="1069">1069</a>
+<a href="#1070" id="1070">1070</a>
+<a href="#1071" id="1071">1071</a>
+<a href="#1072" id="1072">1072</a>
+<a href="#1073" id="1073">1073</a>
+<a href="#1074" id="1074">1074</a>
+<a href="#1075" id="1075">1075</a>
+<a href="#1076" id="1076">1076</a>
+<a href="#1077" id="1077">1077</a>
+<a href="#1078" id="1078">1078</a>
+<a href="#1079" id="1079">1079</a>
+<a href="#1080" id="1080">1080</a>
+<a href="#1081" id="1081">1081</a>
+<a href="#1082" id="1082">1082</a>
+<a href="#1083" id="1083">1083</a>
+<a href="#1084" id="1084">1084</a>
+<a href="#1085" id="1085">1085</a>
+<a href="#1086" id="1086">1086</a>
+<a href="#1087" id="1087">1087</a>
+<a href="#1088" id="1088">1088</a>
+<a href="#1089" id="1089">1089</a>
+<a href="#1090" id="1090">1090</a>
+<a href="#1091" id="1091">1091</a>
+<a href="#1092" id="1092">1092</a>
+<a href="#1093" id="1093">1093</a>
+<a href="#1094" id="1094">1094</a>
+<a href="#1095" id="1095">1095</a>
+<a href="#1096" id="1096">1096</a>
+<a href="#1097" id="1097">1097</a>
+<a href="#1098" id="1098">1098</a>
+<a href="#1099" id="1099">1099</a>
+<a href="#1100" id="1100">1100</a>
+<a href="#1101" id="1101">1101</a>
+<a href="#1102" id="1102">1102</a>
+<a href="#1103" id="1103">1103</a>
+<a href="#1104" id="1104">1104</a>
+<a href="#1105" id="1105">1105</a>
+<a href="#1106" id="1106">1106</a>
+<a href="#1107" id="1107">1107</a>
+<a href="#1108" id="1108">1108</a>
+<a href="#1109" id="1109">1109</a>
+<a href="#1110" id="1110">1110</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -1077,12 +1129,17 @@
 
 </span><span class="doccomment">//! Utilities for converting between IPC types and native Arrow types
 
-</span><span class="kw">use </span>arrow_schema::<span class="kw-2">*</span>;
-<span class="kw">use </span>flatbuffers::{FlatBufferBuilder, ForwardsUOffset, UnionWIPOffset, Vector, WIPOffset};
+</span><span class="kw">use </span>arrow_buffer::Buffer;
+<span class="kw">use </span>arrow_schema::<span class="kw-2">*</span>;
+<span class="kw">use </span>flatbuffers::{
+    FlatBufferBuilder, ForwardsUOffset, UnionWIPOffset, Vector, Verifiable, Verifier,
+    VerifierOptions, WIPOffset,
+};
 <span class="kw">use </span>std::collections::HashMap;
+<span class="kw">use </span>std::fmt::{Debug, Formatter};
 <span class="kw">use </span>std::sync::Arc;
 
-<span class="kw">use crate</span>::{size_prefixed_root_as_message, KeyValue, CONTINUATION_MARKER};
+<span class="kw">use crate</span>::{size_prefixed_root_as_message, KeyValue, Message, CONTINUATION_MARKER};
 <span class="kw">use </span>DataType::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// Serialize a schema in IPC format
@@ -1603,6 +1660,7 @@
                 .as_union_value(),
             children: <span class="prelude-val">Some</span>(fbb.create_vector(<span class="kw-2">&amp;</span>empty_fields[..])),
         },
+        BinaryView | Utf8View =&gt; <span class="macro">unimplemented!</span>(<span class="string">"unimplemented"</span>),
         Utf8 =&gt; FBFieldType {
             type_type: <span class="kw">crate</span>::Type::Utf8,
             type_: <span class="kw">crate</span>::Utf8Builder::new(fbb).finish().as_union_value(),
@@ -1723,6 +1781,7 @@
                 children: <span class="prelude-val">Some</span>(fbb.create_vector(<span class="kw-2">&amp;</span>[child])),
             }
         }
+        ListView(<span class="kw">_</span>) | LargeListView(<span class="kw">_</span>) =&gt; <span class="macro">unimplemented!</span>(<span class="string">"ListView/LargeListView not implemented"</span>),
         LargeList(<span class="kw-2">ref </span>list_type) =&gt; {
             <span class="kw">let </span>child = build_field(fbb, list_type);
             FBFieldType {
@@ -1864,6 +1923,45 @@
     builder.finish()
 }
 
+<span class="doccomment">/// An owned container for a validated [`Message`]
+///
+/// Safely decoding a flatbuffer requires validating the various embedded offsets,
+/// see [`Verifier`]. This is a potentially expensive operation, and it is therefore desirable
+/// to only do this once. [`crate::root_as_message`] performs this validation on construction,
+/// however, it returns a [`Message`] borrowing the provided byte slice. This prevents
+/// storing this [`Message`] in the same data structure that owns the buffer, as this
+/// would require self-referential borrows.
+///
+/// [`MessageBuffer`] solves this problem by providing a safe API for a [`Message`]
+/// without a lifetime bound.
+</span><span class="attr">#[derive(Clone)]
+</span><span class="kw">pub struct </span>MessageBuffer(Buffer);
+
+<span class="kw">impl </span>Debug <span class="kw">for </span>MessageBuffer {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        <span class="self">self</span>.as_ref().fmt(f)
+    }
+}
+
+<span class="kw">impl </span>MessageBuffer {
+    <span class="doccomment">/// Try to create a [`MessageBuffer`] from the provided [`Buffer`]
+    </span><span class="kw">pub fn </span>try_new(buf: Buffer) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ArrowError&gt; {
+        <span class="kw">let </span>opts = VerifierOptions::default();
+        <span class="kw">let </span><span class="kw-2">mut </span>v = Verifier::new(<span class="kw-2">&amp;</span>opts, <span class="kw-2">&amp;</span>buf);
+        &lt;ForwardsUOffset&lt;Message&gt;&gt;::run_verifier(<span class="kw-2">&amp;mut </span>v, <span class="number">0</span>).map_err(|err| {
+            ArrowError::ParseError(<span class="macro">format!</span>(<span class="string">"Unable to get root as message: {err:?}"</span>))
+        })<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>(buf))
+    }
+
+    <span class="doccomment">/// Return the [`Message`]
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Message&lt;<span class="lifetime">'_</span>&gt; {
+        <span class="comment">// SAFETY: Run verifier on construction
+        </span><span class="kw">unsafe </span>{ <span class="kw">crate</span>::root_as_message_unchecked(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>) }
+    }
+}
+
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
@@ -1937,6 +2035,12 @@
                 Field::new(<span class="string">"utf8"</span>, DataType::Utf8, <span class="bool-val">false</span>),
                 Field::new(<span class="string">"binary"</span>, DataType::Binary, <span class="bool-val">false</span>),
                 Field::new_list(<span class="string">"list[u8]"</span>, Field::new(<span class="string">"item"</span>, DataType::UInt8, <span class="bool-val">false</span>), <span class="bool-val">true</span>),
+                Field::new_fixed_size_list(
+                    <span class="string">"fixed_size_list[u8]"</span>,
+                    Field::new(<span class="string">"item"</span>, DataType::UInt8, <span class="bool-val">false</span>),
+                    <span class="number">2</span>,
+                    <span class="bool-val">true</span>,
+                ),
                 Field::new_list(
                     <span class="string">"list[struct&lt;float32, int32, bool&gt;]"</span>,
                     Field::new_struct(

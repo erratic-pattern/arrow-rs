@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["AsyncArrowWriter","SharedBuffer"]};
+window.SIDEBAR_ITEMS = {"struct":["AsyncArrowWriter"]};

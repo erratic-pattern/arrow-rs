@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-array/src/array/primitive_array.rs`."><title>primitive_array.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_array" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-array/src/array/primitive_array.rs`."><title>primitive_array.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="arrow_array" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../arrow_array/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -2484,6 +2484,105 @@
 <a href="#2482" id="2482">2482</a>
 <a href="#2483" id="2483">2483</a>
 <a href="#2484" id="2484">2484</a>
+<a href="#2485" id="2485">2485</a>
+<a href="#2486" id="2486">2486</a>
+<a href="#2487" id="2487">2487</a>
+<a href="#2488" id="2488">2488</a>
+<a href="#2489" id="2489">2489</a>
+<a href="#2490" id="2490">2490</a>
+<a href="#2491" id="2491">2491</a>
+<a href="#2492" id="2492">2492</a>
+<a href="#2493" id="2493">2493</a>
+<a href="#2494" id="2494">2494</a>
+<a href="#2495" id="2495">2495</a>
+<a href="#2496" id="2496">2496</a>
+<a href="#2497" id="2497">2497</a>
+<a href="#2498" id="2498">2498</a>
+<a href="#2499" id="2499">2499</a>
+<a href="#2500" id="2500">2500</a>
+<a href="#2501" id="2501">2501</a>
+<a href="#2502" id="2502">2502</a>
+<a href="#2503" id="2503">2503</a>
+<a href="#2504" id="2504">2504</a>
+<a href="#2505" id="2505">2505</a>
+<a href="#2506" id="2506">2506</a>
+<a href="#2507" id="2507">2507</a>
+<a href="#2508" id="2508">2508</a>
+<a href="#2509" id="2509">2509</a>
+<a href="#2510" id="2510">2510</a>
+<a href="#2511" id="2511">2511</a>
+<a href="#2512" id="2512">2512</a>
+<a href="#2513" id="2513">2513</a>
+<a href="#2514" id="2514">2514</a>
+<a href="#2515" id="2515">2515</a>
+<a href="#2516" id="2516">2516</a>
+<a href="#2517" id="2517">2517</a>
+<a href="#2518" id="2518">2518</a>
+<a href="#2519" id="2519">2519</a>
+<a href="#2520" id="2520">2520</a>
+<a href="#2521" id="2521">2521</a>
+<a href="#2522" id="2522">2522</a>
+<a href="#2523" id="2523">2523</a>
+<a href="#2524" id="2524">2524</a>
+<a href="#2525" id="2525">2525</a>
+<a href="#2526" id="2526">2526</a>
+<a href="#2527" id="2527">2527</a>
+<a href="#2528" id="2528">2528</a>
+<a href="#2529" id="2529">2529</a>
+<a href="#2530" id="2530">2530</a>
+<a href="#2531" id="2531">2531</a>
+<a href="#2532" id="2532">2532</a>
+<a href="#2533" id="2533">2533</a>
+<a href="#2534" id="2534">2534</a>
+<a href="#2535" id="2535">2535</a>
+<a href="#2536" id="2536">2536</a>
+<a href="#2537" id="2537">2537</a>
+<a href="#2538" id="2538">2538</a>
+<a href="#2539" id="2539">2539</a>
+<a href="#2540" id="2540">2540</a>
+<a href="#2541" id="2541">2541</a>
+<a href="#2542" id="2542">2542</a>
+<a href="#2543" id="2543">2543</a>
+<a href="#2544" id="2544">2544</a>
+<a href="#2545" id="2545">2545</a>
+<a href="#2546" id="2546">2546</a>
+<a href="#2547" id="2547">2547</a>
+<a href="#2548" id="2548">2548</a>
+<a href="#2549" id="2549">2549</a>
+<a href="#2550" id="2550">2550</a>
+<a href="#2551" id="2551">2551</a>
+<a href="#2552" id="2552">2552</a>
+<a href="#2553" id="2553">2553</a>
+<a href="#2554" id="2554">2554</a>
+<a href="#2555" id="2555">2555</a>
+<a href="#2556" id="2556">2556</a>
+<a href="#2557" id="2557">2557</a>
+<a href="#2558" id="2558">2558</a>
+<a href="#2559" id="2559">2559</a>
+<a href="#2560" id="2560">2560</a>
+<a href="#2561" id="2561">2561</a>
+<a href="#2562" id="2562">2562</a>
+<a href="#2563" id="2563">2563</a>
+<a href="#2564" id="2564">2564</a>
+<a href="#2565" id="2565">2565</a>
+<a href="#2566" id="2566">2566</a>
+<a href="#2567" id="2567">2567</a>
+<a href="#2568" id="2568">2568</a>
+<a href="#2569" id="2569">2569</a>
+<a href="#2570" id="2570">2570</a>
+<a href="#2571" id="2571">2571</a>
+<a href="#2572" id="2572">2572</a>
+<a href="#2573" id="2573">2573</a>
+<a href="#2574" id="2574">2574</a>
+<a href="#2575" id="2575">2575</a>
+<a href="#2576" id="2576">2576</a>
+<a href="#2577" id="2577">2577</a>
+<a href="#2578" id="2578">2578</a>
+<a href="#2579" id="2579">2579</a>
+<a href="#2580" id="2580">2580</a>
+<a href="#2581" id="2581">2581</a>
+<a href="#2582" id="2582">2582</a>
+<a href="#2583" id="2583">2583</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -3342,13 +3441,14 @@
 
         <span class="kw">let </span>(slice, null_buffer) = builder.slices_mut();
 
-        <span class="kw">match </span>try_for_each_valid_idx(len, <span class="number">0</span>, null_count, null_buffer.as_deref(), |idx| {
+        <span class="kw">let </span>r = try_for_each_valid_idx(len, <span class="number">0</span>, null_count, null_buffer.as_deref(), |idx| {
             <span class="kw">unsafe </span>{ <span class="kw-2">*</span>slice.get_unchecked_mut(idx) = op(<span class="kw-2">*</span>slice.get_unchecked(idx))<span class="question-mark">? </span>};
             <span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>, E&gt;(())
-        }) {
-            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {}
-            <span class="prelude-val">Err</span>(err) =&gt; <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Err</span>(err)),
-        };
+        });
+
+        <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = r {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Err</span>(err));
+        }
 
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Ok</span>(builder.finish()))
     }
@@ -3578,20 +3678,31 @@
 <span class="kw">impl</span>&lt;T: ArrowPrimitiveType&gt; std::fmt::Debug <span class="kw">for </span>PrimitiveArray&lt;T&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter) -&gt; std::fmt::Result {
         <span class="kw">let </span>data_type = <span class="self">self</span>.data_type();
+
         <span class="macro">write!</span>(f, <span class="string">"PrimitiveArray&lt;{data_type:?}&gt;\n[\n"</span>)<span class="question-mark">?</span>;
         print_long_array(<span class="self">self</span>, f, |array, index, f| <span class="kw">match </span>data_type {
             DataType::Date32 | DataType::Date64 =&gt; {
                 <span class="kw">let </span>v = <span class="self">self</span>.value(index).to_isize().unwrap() <span class="kw">as </span>i64;
                 <span class="kw">match </span>as_date::&lt;T&gt;(v) {
                     <span class="prelude-val">Some</span>(date) =&gt; <span class="macro">write!</span>(f, <span class="string">"{date:?}"</span>),
-                    <span class="prelude-val">None </span>=&gt; <span class="macro">write!</span>(f, <span class="string">"null"</span>),
+                    <span class="prelude-val">None </span>=&gt; {
+                        <span class="macro">write!</span>(
+                            f,
+                            <span class="string">"Cast error: Failed to convert {v} to temporal for {data_type:?}"
+                        </span>)
+                    }
                 }
             }
             DataType::Time32(<span class="kw">_</span>) | DataType::Time64(<span class="kw">_</span>) =&gt; {
                 <span class="kw">let </span>v = <span class="self">self</span>.value(index).to_isize().unwrap() <span class="kw">as </span>i64;
                 <span class="kw">match </span>as_time::&lt;T&gt;(v) {
                     <span class="prelude-val">Some</span>(time) =&gt; <span class="macro">write!</span>(f, <span class="string">"{time:?}"</span>),
-                    <span class="prelude-val">None </span>=&gt; <span class="macro">write!</span>(f, <span class="string">"null"</span>),
+                    <span class="prelude-val">None </span>=&gt; {
+                        <span class="macro">write!</span>(
+                            f,
+                            <span class="string">"Cast error: Failed to convert {v} to temporal for {data_type:?}"
+                        </span>)
+                    }
                 }
             }
             DataType::Timestamp(<span class="kw">_</span>, tz_string_opt) =&gt; {
@@ -3655,7 +3766,7 @@
     </span><span class="kw">pub </span>native: <span class="prelude-ty">Option</span>&lt;T::Native&gt;,
 }
 
-<span class="macro">macro_rules! </span>def_from_for_primitive {
+<span class="macro">macro_rules!</span> def_from_for_primitive {
     ( <span class="macro-nonterminal">$ty</span>:ident, <span class="macro-nonterminal">$tt</span>:tt) =&gt; {
         <span class="kw">impl </span>From&lt;<span class="macro-nonterminal">$tt</span>&gt; <span class="kw">for </span>NativeAdapter&lt;<span class="macro-nonterminal">$ty</span>&gt; {
             <span class="kw">fn </span>from(value: <span class="macro-nonterminal">$tt</span>) -&gt; <span class="self">Self </span>{
@@ -3758,7 +3869,7 @@
 <span class="comment">// TODO: the macro is needed here because we'd get "conflicting implementations" error
 // otherwise with both `From&lt;Vec&lt;T::Native&gt;&gt;` and `From&lt;Vec&lt;Option&lt;T::Native&gt;&gt;&gt;`.
 // We should revisit this in future.
-</span><span class="macro">macro_rules! </span>def_numeric_from_vec {
+</span><span class="macro">macro_rules!</span> def_numeric_from_vec {
     ( <span class="macro-nonterminal">$ty</span>:ident ) =&gt; {
         <span class="kw">impl </span>From&lt;Vec&lt;&lt;<span class="macro-nonterminal">$ty </span><span class="kw">as </span>ArrowPrimitiveType&gt;::Native&gt;&gt; <span class="kw">for </span>PrimitiveArray&lt;<span class="macro-nonterminal">$ty</span>&gt; {
             <span class="kw">fn </span>from(data: Vec&lt;&lt;<span class="macro-nonterminal">$ty </span><span class="kw">as </span>ArrowPrimitiveType&gt;::Native&gt;) -&gt; <span class="self">Self </span>{
@@ -3975,9 +4086,8 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::builder::{Decimal128Builder, Decimal256Builder};
     <span class="kw">use </span><span class="kw">crate</span>::cast::downcast_array;
-    <span class="kw">use crate</span>::{ArrayRef, BooleanArray};
+    <span class="kw">use </span><span class="kw">crate</span>::BooleanArray;
     <span class="kw">use </span>arrow_schema::TimeUnit;
-    <span class="kw">use </span>std::sync::Arc;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_primitive_array_from_vec() {
@@ -4031,7 +4141,10 @@
                 <span class="comment">// roundtrip to and from datetime
                 </span><span class="macro">assert_eq!</span>(
                     <span class="number">1550902545147</span>,
-                    arr.value_as_datetime(i).unwrap().timestamp_millis()
+                    arr.value_as_datetime(i)
+                        .unwrap()
+                        .and_utc()
+                        .timestamp_millis()
                 );
             } <span class="kw">else </span>{
                 <span class="macro">assert!</span>(arr.is_null(i));
@@ -4433,8 +4546,9 @@
         <span class="comment">// chrono::NaiveDatetime::from_timestamp_opt returns None while input is invalid
         </span><span class="kw">let </span>arr: PrimitiveArray&lt;Time32SecondType&gt; = <span class="macro">vec!</span>[-<span class="number">7201</span>, -<span class="number">60054</span>].into();
         <span class="macro">assert_eq!</span>(
-            <span class="string">"PrimitiveArray&lt;Time32(Second)&gt;\n[\n  null,\n  null,\n]"</span>,
-            <span class="macro">format!</span>(<span class="string">"{arr:?}"</span>)
+        <span class="string">"PrimitiveArray&lt;Time32(Second)&gt;\n[\n  Cast error: Failed to convert -7201 to temporal for Time32(Second),\n  Cast error: Failed to convert -60054 to temporal for Time32(Second),\n]"</span>,
+            <span class="comment">// "PrimitiveArray&lt;Time32(Second)&gt;\n[\n  null,\n  null,\n]",
+            </span><span class="macro">format!</span>(<span class="string">"{arr:?}"</span>)
         )
     }
 
@@ -4966,6 +5080,90 @@
     #[should_panic(expected = <span class="string">"PrimitiveArray expected data type Int32 got Date32"</span>)]
     </span><span class="kw">fn </span>test_with_data_type() {
         Int32Array::new(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>].into(), <span class="prelude-val">None</span>).with_data_type(DataType::Date32);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_time_32second_output() {
+        <span class="kw">let </span>array: Time32SecondArray = <span class="macro">vec!</span>[
+            <span class="prelude-val">Some</span>(-<span class="number">1</span>),
+            <span class="prelude-val">Some</span>(<span class="number">0</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_399</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_400</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_401</span>),
+            <span class="prelude-val">None</span>,
+        ]
+        .into();
+        <span class="kw">let </span>debug_str = <span class="macro">format!</span>(<span class="string">"{:?}"</span>, array);
+        <span class="macro">assert_eq!</span>(<span class="string">"PrimitiveArray&lt;Time32(Second)&gt;\n[\n  Cast error: Failed to convert -1 to temporal for Time32(Second),\n  00:00:00,\n  23:59:59,\n  Cast error: Failed to convert 86400 to temporal for Time32(Second),\n  Cast error: Failed to convert 86401 to temporal for Time32(Second),\n  null,\n]"</span>,
+    debug_str
+    );
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_time_32millisecond_debug_output() {
+        <span class="kw">let </span>array: Time32MillisecondArray = <span class="macro">vec!</span>[
+            <span class="prelude-val">Some</span>(-<span class="number">1</span>),
+            <span class="prelude-val">Some</span>(<span class="number">0</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_399_000</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_400_000</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_401_000</span>),
+            <span class="prelude-val">None</span>,
+        ]
+        .into();
+        <span class="kw">let </span>debug_str = <span class="macro">format!</span>(<span class="string">"{:?}"</span>, array);
+        <span class="macro">assert_eq!</span>(<span class="string">"PrimitiveArray&lt;Time32(Millisecond)&gt;\n[\n  Cast error: Failed to convert -1 to temporal for Time32(Millisecond),\n  00:00:00,\n  23:59:59,\n  Cast error: Failed to convert 86400000 to temporal for Time32(Millisecond),\n  Cast error: Failed to convert 86401000 to temporal for Time32(Millisecond),\n  null,\n]"</span>,
+            debug_str
+        );
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_time_64nanosecond_debug_output() {
+        <span class="kw">let </span>array: Time64NanosecondArray = <span class="macro">vec!</span>[
+            <span class="prelude-val">Some</span>(-<span class="number">1</span>),
+            <span class="prelude-val">Some</span>(<span class="number">0</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_399 </span>* <span class="number">1_000_000_000</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_400 </span>* <span class="number">1_000_000_000</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_401 </span>* <span class="number">1_000_000_000</span>),
+            <span class="prelude-val">None</span>,
+        ]
+        .into();
+        <span class="kw">let </span>debug_str = <span class="macro">format!</span>(<span class="string">"{:?}"</span>, array);
+        <span class="macro">assert_eq!</span>(
+        <span class="string">"PrimitiveArray&lt;Time64(Nanosecond)&gt;\n[\n  Cast error: Failed to convert -1 to temporal for Time64(Nanosecond),\n  00:00:00,\n  23:59:59,\n  Cast error: Failed to convert 86400000000000 to temporal for Time64(Nanosecond),\n  Cast error: Failed to convert 86401000000000 to temporal for Time64(Nanosecond),\n  null,\n]"</span>,
+            debug_str
+        );
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_time_64microsecond_debug_output() {
+        <span class="kw">let </span>array: Time64MicrosecondArray = <span class="macro">vec!</span>[
+            <span class="prelude-val">Some</span>(-<span class="number">1</span>),
+            <span class="prelude-val">Some</span>(<span class="number">0</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_399 </span>* <span class="number">1_000_000</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_400 </span>* <span class="number">1_000_000</span>),
+            <span class="prelude-val">Some</span>(<span class="number">86_401 </span>* <span class="number">1_000_000</span>),
+            <span class="prelude-val">None</span>,
+        ]
+        .into();
+        <span class="kw">let </span>debug_str = <span class="macro">format!</span>(<span class="string">"{:?}"</span>, array);
+        <span class="macro">assert_eq!</span>(<span class="string">"PrimitiveArray&lt;Time64(Microsecond)&gt;\n[\n  Cast error: Failed to convert -1 to temporal for Time64(Microsecond),\n  00:00:00,\n  23:59:59,\n  Cast error: Failed to convert 86400000000 to temporal for Time64(Microsecond),\n  Cast error: Failed to convert 86401000000 to temporal for Time64(Microsecond),\n  null,\n]"</span>, debug_str);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_primitive_with_nulls_into_builder() {
+        <span class="kw">let </span>array: Int32Array = <span class="macro">vec!</span>[
+            <span class="prelude-val">Some</span>(<span class="number">1</span>),
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="number">3</span>),
+            <span class="prelude-val">Some</span>(<span class="number">4</span>),
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="number">7</span>),
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="number">8</span>),
+        ]
+        .into_iter()
+        .collect();
+        <span class="kw">let _ </span>= array.into_builder();
     }
 }
 </code></pre></div></section></main></body></html>

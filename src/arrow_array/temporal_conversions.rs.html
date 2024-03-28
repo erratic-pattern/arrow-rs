@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-array/src/temporal_conversions.rs`."><title>temporal_conversions.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_array" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (5518eaa94 2024-01-29)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-array/src/temporal_conversions.rs`."><title>temporal_conversions.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_array" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (c9f8f3438 2024-03-27)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../arrow_array/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -347,6 +347,10 @@
 <a href="#345" id="345">345</a>
 <a href="#346" id="346">346</a>
 <a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -392,7 +396,7 @@
 <span class="doccomment">/// converts a `i32` representing a `date32` to [`NaiveDateTime`]
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>date32_to_datetime(v: i32) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDateTime&gt; {
-    NaiveDateTime::from_timestamp_opt(v <span class="kw">as </span>i64 * SECONDS_IN_DAY, <span class="number">0</span>)
+    <span class="prelude-val">Some</span>(DateTime::from_timestamp(v <span class="kw">as </span>i64 * SECONDS_IN_DAY, <span class="number">0</span>)<span class="question-mark">?</span>.naive_utc())
 }
 
 <span class="doccomment">/// converts a `i64` representing a `date64` to [`NaiveDateTime`]
@@ -400,12 +404,13 @@
 </span><span class="kw">pub fn </span>date64_to_datetime(v: i64) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDateTime&gt; {
     <span class="kw">let </span>(sec, milli_sec) = split_second(v, MILLISECONDS);
 
-    NaiveDateTime::from_timestamp_opt(
+    <span class="kw">let </span>datetime = DateTime::from_timestamp(
         <span class="comment">// extract seconds from milliseconds
         </span>sec,
         <span class="comment">// discard extracted seconds and convert milliseconds to nanoseconds
         </span>milli_sec * MICROSECONDS <span class="kw">as </span>u32,
-    )
+    )<span class="question-mark">?</span>;
+    <span class="prelude-val">Some</span>(datetime.naive_utc())
 }
 
 <span class="doccomment">/// converts a `i32` representing a `time32(s)` to [`NaiveDateTime`]
@@ -479,7 +484,7 @@
 <span class="doccomment">/// converts a `i64` representing a `timestamp(s)` to [`NaiveDateTime`]
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>timestamp_s_to_datetime(v: i64) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDateTime&gt; {
-    NaiveDateTime::from_timestamp_opt(v, <span class="number">0</span>)
+    <span class="prelude-val">Some</span>(DateTime::from_timestamp(v, <span class="number">0</span>)<span class="question-mark">?</span>.naive_utc())
 }
 
 <span class="doccomment">/// converts a `i64` representing a `timestamp(ms)` to [`NaiveDateTime`]
@@ -487,12 +492,13 @@
 </span><span class="kw">pub fn </span>timestamp_ms_to_datetime(v: i64) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDateTime&gt; {
     <span class="kw">let </span>(sec, milli_sec) = split_second(v, MILLISECONDS);
 
-    NaiveDateTime::from_timestamp_opt(
+    <span class="kw">let </span>datetime = DateTime::from_timestamp(
         <span class="comment">// extract seconds from milliseconds
         </span>sec,
         <span class="comment">// discard extracted seconds and convert milliseconds to nanoseconds
         </span>milli_sec * MICROSECONDS <span class="kw">as </span>u32,
-    )
+    )<span class="question-mark">?</span>;
+    <span class="prelude-val">Some</span>(datetime.naive_utc())
 }
 
 <span class="doccomment">/// converts a `i64` representing a `timestamp(us)` to [`NaiveDateTime`]
@@ -500,12 +506,13 @@
 </span><span class="kw">pub fn </span>timestamp_us_to_datetime(v: i64) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDateTime&gt; {
     <span class="kw">let </span>(sec, micro_sec) = split_second(v, MICROSECONDS);
 
-    NaiveDateTime::from_timestamp_opt(
+    <span class="kw">let </span>datetime = DateTime::from_timestamp(
         <span class="comment">// extract seconds from microseconds
         </span>sec,
         <span class="comment">// discard extracted seconds and convert microseconds to nanoseconds
         </span>micro_sec * MILLISECONDS <span class="kw">as </span>u32,
-    )
+    )<span class="question-mark">?</span>;
+    <span class="prelude-val">Some</span>(datetime.naive_utc())
 }
 
 <span class="doccomment">/// converts a `i64` representing a `timestamp(ns)` to [`NaiveDateTime`]
@@ -513,11 +520,12 @@
 </span><span class="kw">pub fn </span>timestamp_ns_to_datetime(v: i64) -&gt; <span class="prelude-ty">Option</span>&lt;NaiveDateTime&gt; {
     <span class="kw">let </span>(sec, nano_sec) = split_second(v, NANOSECONDS);
 
-    NaiveDateTime::from_timestamp_opt(
+    <span class="kw">let </span>datetime = DateTime::from_timestamp(
         <span class="comment">// extract seconds from nanoseconds
         </span>sec, <span class="comment">// discard extracted seconds
         </span>nano_sec,
-    )
+    )<span class="question-mark">?</span>;
+    <span class="prelude-val">Some</span>(datetime.naive_utc())
 }
 
 <span class="attr">#[inline]
@@ -528,13 +536,13 @@
 <span class="doccomment">/// converts a `i64` representing a `duration(s)` to [`Duration`]
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>duration_s_to_duration(v: i64) -&gt; Duration {
-    Duration::seconds(v)
+    Duration::try_seconds(v).unwrap()
 }
 
 <span class="doccomment">/// converts a `i64` representing a `duration(ms)` to [`Duration`]
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>duration_ms_to_duration(v: i64) -&gt; Duration {
-    Duration::milliseconds(v)
+    Duration::try_milliseconds(v).unwrap()
 }
 
 <span class="doccomment">/// converts a `i64` representing a `duration(us)` to [`Duration`]
@@ -621,18 +629,18 @@
         date64_to_datetime, split_second, timestamp_ms_to_datetime, timestamp_ns_to_datetime,
         timestamp_us_to_datetime, NANOSECONDS,
     };
-    <span class="kw">use </span>chrono::NaiveDateTime;
+    <span class="kw">use </span>chrono::DateTime;
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>negative_input_timestamp_ns_to_datetime() {
         <span class="macro">assert_eq!</span>(
             timestamp_ns_to_datetime(-<span class="number">1</span>),
-            NaiveDateTime::from_timestamp_opt(-<span class="number">1</span>, <span class="number">999_999_999</span>)
+            DateTime::from_timestamp(-<span class="number">1</span>, <span class="number">999_999_999</span>).map(|x| x.naive_utc())
         );
 
         <span class="macro">assert_eq!</span>(
             timestamp_ns_to_datetime(-<span class="number">1_000_000_001</span>),
-            NaiveDateTime::from_timestamp_opt(-<span class="number">2</span>, <span class="number">999_999_999</span>)
+            DateTime::from_timestamp(-<span class="number">2</span>, <span class="number">999_999_999</span>).map(|x| x.naive_utc())
         );
     }
 
@@ -640,12 +648,12 @@
     </span><span class="kw">fn </span>negative_input_timestamp_us_to_datetime() {
         <span class="macro">assert_eq!</span>(
             timestamp_us_to_datetime(-<span class="number">1</span>),
-            NaiveDateTime::from_timestamp_opt(-<span class="number">1</span>, <span class="number">999_999_000</span>)
+            DateTime::from_timestamp(-<span class="number">1</span>, <span class="number">999_999_000</span>).map(|x| x.naive_utc())
         );
 
         <span class="macro">assert_eq!</span>(
             timestamp_us_to_datetime(-<span class="number">1_000_001</span>),
-            NaiveDateTime::from_timestamp_opt(-<span class="number">2</span>, <span class="number">999_999_000</span>)
+            DateTime::from_timestamp(-<span class="number">2</span>, <span class="number">999_999_000</span>).map(|x| x.naive_utc())
         );
     }
 
@@ -653,12 +661,12 @@
     </span><span class="kw">fn </span>negative_input_timestamp_ms_to_datetime() {
         <span class="macro">assert_eq!</span>(
             timestamp_ms_to_datetime(-<span class="number">1</span>),
-            NaiveDateTime::from_timestamp_opt(-<span class="number">1</span>, <span class="number">999_000_000</span>)
+            DateTime::from_timestamp(-<span class="number">1</span>, <span class="number">999_000_000</span>).map(|x| x.naive_utc())
         );
 
         <span class="macro">assert_eq!</span>(
             timestamp_ms_to_datetime(-<span class="number">1_001</span>),
-            NaiveDateTime::from_timestamp_opt(-<span class="number">2</span>, <span class="number">999_000_000</span>)
+            DateTime::from_timestamp(-<span class="number">2</span>, <span class="number">999_000_000</span>).map(|x| x.naive_utc())
         );
     }
 
@@ -666,12 +674,12 @@
     </span><span class="kw">fn </span>negative_input_date64_to_datetime() {
         <span class="macro">assert_eq!</span>(
             date64_to_datetime(-<span class="number">1</span>),
-            NaiveDateTime::from_timestamp_opt(-<span class="number">1</span>, <span class="number">999_000_000</span>)
+            DateTime::from_timestamp(-<span class="number">1</span>, <span class="number">999_000_000</span>).map(|x| x.naive_utc())
         );
 
         <span class="macro">assert_eq!</span>(
             date64_to_datetime(-<span class="number">1_001</span>),
-            NaiveDateTime::from_timestamp_opt(-<span class="number">2</span>, <span class="number">999_000_000</span>)
+            DateTime::from_timestamp(-<span class="number">2</span>, <span class="number">999_000_000</span>).map(|x| x.naive_utc())
         );
     }
 
