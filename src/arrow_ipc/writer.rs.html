@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-ipc/src/writer.rs`."><title>writer.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_ipc" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (805813650 2024-03-31)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `arrow-ipc/src/writer.rs`."><title>writer.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="arrow_ipc" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (1684a753d 2024-04-01)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../arrow_ipc/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -2237,6 +2237,117 @@
 <a href="#2235" id="2235">2235</a>
 <a href="#2236" id="2236">2236</a>
 <a href="#2237" id="2237">2237</a>
+<a href="#2238" id="2238">2238</a>
+<a href="#2239" id="2239">2239</a>
+<a href="#2240" id="2240">2240</a>
+<a href="#2241" id="2241">2241</a>
+<a href="#2242" id="2242">2242</a>
+<a href="#2243" id="2243">2243</a>
+<a href="#2244" id="2244">2244</a>
+<a href="#2245" id="2245">2245</a>
+<a href="#2246" id="2246">2246</a>
+<a href="#2247" id="2247">2247</a>
+<a href="#2248" id="2248">2248</a>
+<a href="#2249" id="2249">2249</a>
+<a href="#2250" id="2250">2250</a>
+<a href="#2251" id="2251">2251</a>
+<a href="#2252" id="2252">2252</a>
+<a href="#2253" id="2253">2253</a>
+<a href="#2254" id="2254">2254</a>
+<a href="#2255" id="2255">2255</a>
+<a href="#2256" id="2256">2256</a>
+<a href="#2257" id="2257">2257</a>
+<a href="#2258" id="2258">2258</a>
+<a href="#2259" id="2259">2259</a>
+<a href="#2260" id="2260">2260</a>
+<a href="#2261" id="2261">2261</a>
+<a href="#2262" id="2262">2262</a>
+<a href="#2263" id="2263">2263</a>
+<a href="#2264" id="2264">2264</a>
+<a href="#2265" id="2265">2265</a>
+<a href="#2266" id="2266">2266</a>
+<a href="#2267" id="2267">2267</a>
+<a href="#2268" id="2268">2268</a>
+<a href="#2269" id="2269">2269</a>
+<a href="#2270" id="2270">2270</a>
+<a href="#2271" id="2271">2271</a>
+<a href="#2272" id="2272">2272</a>
+<a href="#2273" id="2273">2273</a>
+<a href="#2274" id="2274">2274</a>
+<a href="#2275" id="2275">2275</a>
+<a href="#2276" id="2276">2276</a>
+<a href="#2277" id="2277">2277</a>
+<a href="#2278" id="2278">2278</a>
+<a href="#2279" id="2279">2279</a>
+<a href="#2280" id="2280">2280</a>
+<a href="#2281" id="2281">2281</a>
+<a href="#2282" id="2282">2282</a>
+<a href="#2283" id="2283">2283</a>
+<a href="#2284" id="2284">2284</a>
+<a href="#2285" id="2285">2285</a>
+<a href="#2286" id="2286">2286</a>
+<a href="#2287" id="2287">2287</a>
+<a href="#2288" id="2288">2288</a>
+<a href="#2289" id="2289">2289</a>
+<a href="#2290" id="2290">2290</a>
+<a href="#2291" id="2291">2291</a>
+<a href="#2292" id="2292">2292</a>
+<a href="#2293" id="2293">2293</a>
+<a href="#2294" id="2294">2294</a>
+<a href="#2295" id="2295">2295</a>
+<a href="#2296" id="2296">2296</a>
+<a href="#2297" id="2297">2297</a>
+<a href="#2298" id="2298">2298</a>
+<a href="#2299" id="2299">2299</a>
+<a href="#2300" id="2300">2300</a>
+<a href="#2301" id="2301">2301</a>
+<a href="#2302" id="2302">2302</a>
+<a href="#2303" id="2303">2303</a>
+<a href="#2304" id="2304">2304</a>
+<a href="#2305" id="2305">2305</a>
+<a href="#2306" id="2306">2306</a>
+<a href="#2307" id="2307">2307</a>
+<a href="#2308" id="2308">2308</a>
+<a href="#2309" id="2309">2309</a>
+<a href="#2310" id="2310">2310</a>
+<a href="#2311" id="2311">2311</a>
+<a href="#2312" id="2312">2312</a>
+<a href="#2313" id="2313">2313</a>
+<a href="#2314" id="2314">2314</a>
+<a href="#2315" id="2315">2315</a>
+<a href="#2316" id="2316">2316</a>
+<a href="#2317" id="2317">2317</a>
+<a href="#2318" id="2318">2318</a>
+<a href="#2319" id="2319">2319</a>
+<a href="#2320" id="2320">2320</a>
+<a href="#2321" id="2321">2321</a>
+<a href="#2322" id="2322">2322</a>
+<a href="#2323" id="2323">2323</a>
+<a href="#2324" id="2324">2324</a>
+<a href="#2325" id="2325">2325</a>
+<a href="#2326" id="2326">2326</a>
+<a href="#2327" id="2327">2327</a>
+<a href="#2328" id="2328">2328</a>
+<a href="#2329" id="2329">2329</a>
+<a href="#2330" id="2330">2330</a>
+<a href="#2331" id="2331">2331</a>
+<a href="#2332" id="2332">2332</a>
+<a href="#2333" id="2333">2333</a>
+<a href="#2334" id="2334">2334</a>
+<a href="#2335" id="2335">2335</a>
+<a href="#2336" id="2336">2336</a>
+<a href="#2337" id="2337">2337</a>
+<a href="#2338" id="2338">2338</a>
+<a href="#2339" id="2339">2339</a>
+<a href="#2340" id="2340">2340</a>
+<a href="#2341" id="2341">2341</a>
+<a href="#2342" id="2342">2342</a>
+<a href="#2343" id="2343">2343</a>
+<a href="#2344" id="2344">2344</a>
+<a href="#2345" id="2345">2345</a>
+<a href="#2346" id="2346">2346</a>
+<a href="#2347" id="2347">2347</a>
+<a href="#2348" id="2348">2348</a>
 </pre></div><pre class="rust"><code><span class="comment">// Licensed to the Apache Software Foundation (ASF) under one
 // or more contributor license agreements.  See the NOTICE file
 // distributed with this work for additional information
@@ -2651,6 +2762,8 @@
         <span class="kw">let </span>compression_codec: <span class="prelude-ty">Option</span>&lt;CompressionCodec&gt; =
             batch_compression_type.map(TryInto::try_into).transpose()<span class="question-mark">?</span>;
 
+        <span class="kw">let </span><span class="kw-2">mut </span>variadic_buffer_counts = <span class="macro">vec!</span>[];
+
         <span class="kw">for </span>array <span class="kw">in </span>batch.columns() {
             <span class="kw">let </span>array_data = array.to_data();
             offset = write_array_data(
@@ -2664,6 +2777,8 @@
                 compression_codec,
                 write_options,
             )<span class="question-mark">?</span>;
+
+            append_variadic_buffer_counts(<span class="kw-2">&amp;mut </span>variadic_buffer_counts, <span class="kw-2">&amp;</span>array_data);
         }
         <span class="comment">// pad the tail of body data
         </span><span class="kw">let </span>len = arrow_data.len();
@@ -2673,6 +2788,12 @@
         <span class="comment">// write data
         </span><span class="kw">let </span>buffers = fbb.create_vector(<span class="kw-2">&amp;</span>buffers);
         <span class="kw">let </span>nodes = fbb.create_vector(<span class="kw-2">&amp;</span>nodes);
+        <span class="kw">let </span>variadic_buffer = <span class="kw">if </span>variadic_buffer_counts.is_empty() {
+            <span class="prelude-val">None
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Some</span>(fbb.create_vector(<span class="kw-2">&amp;</span>variadic_buffer_counts))
+        };
+
         <span class="kw">let </span>root = {
             <span class="kw">let </span><span class="kw-2">mut </span>batch_builder = <span class="kw">crate</span>::RecordBatchBuilder::new(<span class="kw-2">&amp;mut </span>fbb);
             batch_builder.add_length(batch.num_rows() <span class="kw">as </span>i64);
@@ -2680,6 +2801,10 @@
             batch_builder.add_buffers(buffers);
             <span class="kw">if let </span><span class="prelude-val">Some</span>(c) = compression {
                 batch_builder.add_compression(c);
+            }
+
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(v) = variadic_buffer {
+                batch_builder.add_variadicBufferCounts(v);
             }
             <span class="kw">let </span>b = batch_builder.finish();
             b.as_union_value()
@@ -2740,6 +2865,9 @@
             write_options,
         )<span class="question-mark">?</span>;
 
+        <span class="kw">let </span><span class="kw-2">mut </span>variadic_buffer_counts = <span class="macro">vec!</span>[];
+        append_variadic_buffer_counts(<span class="kw-2">&amp;mut </span>variadic_buffer_counts, array_data);
+
         <span class="comment">// pad the tail of body data
         </span><span class="kw">let </span>len = arrow_data.len();
         <span class="kw">let </span>pad_len = pad_to_8(len <span class="kw">as </span>u32);
@@ -2748,6 +2876,11 @@
         <span class="comment">// write data
         </span><span class="kw">let </span>buffers = fbb.create_vector(<span class="kw-2">&amp;</span>buffers);
         <span class="kw">let </span>nodes = fbb.create_vector(<span class="kw-2">&amp;</span>nodes);
+        <span class="kw">let </span>variadic_buffer = <span class="kw">if </span>variadic_buffer_counts.is_empty() {
+            <span class="prelude-val">None
+        </span>} <span class="kw">else </span>{
+            <span class="prelude-val">Some</span>(fbb.create_vector(<span class="kw-2">&amp;</span>variadic_buffer_counts))
+        };
 
         <span class="kw">let </span>root = {
             <span class="kw">let </span><span class="kw-2">mut </span>batch_builder = <span class="kw">crate</span>::RecordBatchBuilder::new(<span class="kw-2">&amp;mut </span>fbb);
@@ -2756,6 +2889,9 @@
             batch_builder.add_buffers(buffers);
             <span class="kw">if let </span><span class="prelude-val">Some</span>(c) = compression {
                 batch_builder.add_compression(c);
+            }
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(v) = variadic_buffer {
+                batch_builder.add_variadicBufferCounts(v);
             }
             batch_builder.finish()
         };
@@ -2783,6 +2919,25 @@
             ipc_message: finished_data.to_vec(),
             arrow_data,
         })
+    }
+}
+
+<span class="kw">fn </span>append_variadic_buffer_counts(counts: <span class="kw-2">&amp;mut </span>Vec&lt;i64&gt;, array: <span class="kw-2">&amp;</span>ArrayData) {
+    <span class="kw">match </span>array.data_type() {
+        DataType::BinaryView | DataType::Utf8View =&gt; {
+            <span class="comment">// The spec documents the counts only includes the variadic buffers, not the view/null buffers.
+            // https://arrow.apache.org/docs/format/Columnar.html#variadic-buffers
+            </span>counts.push(array.buffers().len() <span class="kw">as </span>i64 - <span class="number">1</span>);
+        }
+        DataType::Dictionary(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; {
+            <span class="comment">// Do nothing
+            // Dictionary types are handled in `encode_dictionaries`.
+        </span>}
+        <span class="kw">_ </span>=&gt; {
+            <span class="kw">for </span>child <span class="kw">in </span>array.child_data() {
+                append_variadic_buffer_counts(counts, child)
+            }
+        }
     }
 }
 
@@ -3488,6 +3643,22 @@
                 compression_codec,
             )<span class="question-mark">?</span>;
         }
+    } <span class="kw">else if </span><span class="macro">matches!</span>(data_type, DataType::BinaryView | DataType::Utf8View) {
+        <span class="comment">// Slicing the views buffer is safe and easy,
+        // but pruning unneeded data buffers is much more nuanced since it's complicated to prove that no views reference the pruned buffers
+        //
+        // Current implementation just serialize the raw arrays as given and not try to optimize anything.
+        // If users wants to "compact" the arrays prior to sending them over IPC,
+        // they should consider the gc API suggested in #5513
+        </span><span class="kw">for </span>buffer <span class="kw">in </span>array_data.buffers() {
+            offset = write_buffer(
+                buffer.as_slice(),
+                buffers,
+                arrow_data,
+                offset,
+                compression_codec,
+            )<span class="question-mark">?</span>;
+        }
     } <span class="kw">else if </span><span class="macro">matches!</span>(data_type, DataType::LargeBinary | DataType::LargeUtf8) {
         <span class="kw">let </span>(offsets, values) = get_byte_array_buffers::&lt;i64&gt;(array_data);
         <span class="kw">for </span>buffer <span class="kw">in </span>[offsets, values] {
@@ -4041,6 +4212,57 @@
     </span><span class="kw">fn </span>test_write_union_file_v4_v5() {
         write_union_file(IpcWriteOptions::try_new(<span class="number">8</span>, <span class="bool-val">false</span>, MetadataVersion::V4).unwrap());
         write_union_file(IpcWriteOptions::try_new(<span class="number">8</span>, <span class="bool-val">false</span>, MetadataVersion::V5).unwrap());
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_write_view_types() {
+        <span class="kw">const </span>LONG_TEST_STRING: <span class="kw-2">&amp;</span>str =
+            <span class="string">"This is a long string to make sure binary view array handles it"</span>;
+        <span class="kw">let </span>schema = Schema::new(<span class="macro">vec!</span>[
+            Field::new(<span class="string">"field1"</span>, DataType::BinaryView, <span class="bool-val">true</span>),
+            Field::new(<span class="string">"field2"</span>, DataType::Utf8View, <span class="bool-val">true</span>),
+        ]);
+        <span class="kw">let </span>values: Vec&lt;<span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>[u8]&gt;&gt; = <span class="macro">vec!</span>[
+            <span class="prelude-val">Some</span>(<span class="string">b"foo"</span>),
+            <span class="prelude-val">Some</span>(<span class="string">b"bar"</span>),
+            <span class="prelude-val">Some</span>(LONG_TEST_STRING.as_bytes()),
+        ];
+        <span class="kw">let </span>binary_array = BinaryViewArray::from_iter(values);
+        <span class="kw">let </span>utf8_array =
+            StringViewArray::from_iter(<span class="macro">vec!</span>[<span class="prelude-val">Some</span>(<span class="string">"foo"</span>), <span class="prelude-val">Some</span>(<span class="string">"bar"</span>), <span class="prelude-val">Some</span>(LONG_TEST_STRING)]);
+        <span class="kw">let </span>record_batch = RecordBatch::try_new(
+            Arc::new(schema.clone()),
+            <span class="macro">vec!</span>[Arc::new(binary_array), Arc::new(utf8_array)],
+        )
+        .unwrap();
+
+        <span class="kw">let </span><span class="kw-2">mut </span>file = tempfile::tempfile().unwrap();
+        {
+            <span class="kw">let </span><span class="kw-2">mut </span>writer = FileWriter::try_new(<span class="kw-2">&amp;mut </span>file, <span class="kw-2">&amp;</span>schema).unwrap();
+            writer.write(<span class="kw-2">&amp;</span>record_batch).unwrap();
+            writer.finish().unwrap();
+        }
+        file.rewind().unwrap();
+        {
+            <span class="kw">let </span><span class="kw-2">mut </span>reader = FileReader::try_new(<span class="kw-2">&amp;</span>file, <span class="prelude-val">None</span>).unwrap();
+            <span class="kw">let </span>read_batch = reader.next().unwrap().unwrap();
+            read_batch
+                .columns()
+                .iter()
+                .zip(record_batch.columns())
+                .for_each(|(a, b)| {
+                    <span class="macro">assert_eq!</span>(a, b);
+                });
+        }
+        file.rewind().unwrap();
+        {
+            <span class="kw">let </span><span class="kw-2">mut </span>reader = FileReader::try_new(<span class="kw-2">&amp;</span>file, <span class="prelude-val">Some</span>(<span class="macro">vec!</span>[<span class="number">0</span>])).unwrap();
+            <span class="kw">let </span>read_batch = reader.next().unwrap().unwrap();
+            <span class="macro">assert_eq!</span>(read_batch.num_columns(), <span class="number">1</span>);
+            <span class="kw">let </span>read_array = read_batch.column(<span class="number">0</span>);
+            <span class="kw">let </span>write_array = record_batch.column(<span class="number">0</span>);
+            <span class="macro">assert_eq!</span>(read_array, write_array);
+        }
     }
 
     <span class="attr">#[test]
